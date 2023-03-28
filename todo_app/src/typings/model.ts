@@ -35,3 +35,25 @@ export interface TodoEntity extends EntityBase {
   created_at: string;
   updated_at: string;
 }
+
+export interface TodoListStoreRequest {
+  name: string;
+}
+
+export interface TodoListUpdateRequest {
+  id: number;
+  name: string;
+}
+
+export interface TodoStoreRequest {
+  description: string;
+  is_done: boolean;
+  todo_list_id: number;
+}
+
+export interface TodoUpdateRequest {
+  id: number;
+  description: string;
+  is_done: boolean;
+  todo_list_id: number;
+}
