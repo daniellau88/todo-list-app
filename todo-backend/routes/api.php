@@ -20,14 +20,20 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('todos', [TodoController::class, 'index']);
-Route::get('todos/{todo}', [TodoController::class, 'show']);
-Route::post('todos', [TodoController::class, 'store']);
-Route::put('todos/{todo}', [TodoController::class, 'update']);
-Route::delete('todos/{todo}', [TodoController::class, 'delete']);
 
-Route::get('todo_lists', [TodoListController::class, 'index']);
-Route::get('todo_lists/{todo_list}', [TodoListController::class, 'show']);
-Route::post('todo_lists', [TodoListController::class, 'store']);
-Route::put('todo_lists/{todo_list}', [TodoListController::class, 'update']);
-Route::delete('todo_lists/{todo_list}', [TodoListController::class, 'delete']);
+Route::prefix('todos')->group(function () {
+    Route::get('', [TodoController::class, 'index']);
+    Route::get('/{todo}', [TodoController::class, 'show']);
+    Route::post('', [TodoController::class, 'store']);
+    Route::put('/{todo}', [TodoController::class, 'update']);
+    Route::delete('/{todo}', [TodoController::class, 'delete']);
+});
+
+
+Route::prefix('todo_lists')->group(function () {
+    Route::get('', [TodoListController::class, 'index']);
+    Route::get('/{todo_list}', [TodoListController::class, 'show']);
+    Route::post('', [TodoListController::class, 'store']);
+    Route::put('/{todo_list}', [TodoListController::class, 'update']);
+    Route::delete('/{todo_list}', [TodoListController::class, 'delete']);
+});

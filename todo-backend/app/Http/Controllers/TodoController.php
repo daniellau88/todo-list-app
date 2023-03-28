@@ -9,32 +9,32 @@ class TodoController extends Controller
 {
     public function index()
     {
-        return Todo::all();
+        return format_json_response(['items' => Todo::all()]);
     }
  
     public function show(Todo $todo)
     {
-        return $todo;
+        return format_json_response($todo);
     }
 
     public function store(Request $request)
     {
         $todo = Todo::create($request->all());
 
-        return response()->json($todo, 201);
+        return format_json_response($todo, ['Todo added']);
     }
 
     public function update(Request $request, Todo $todo)
     {
         $todo->update($request->all());
 
-        return response()->json($todo, 200);
+        return format_json_response($todo, ['Todo updated']);
     }
 
     public function delete(Request $request, Todo $todo)
     {
         $todo->delete();
 
-        return response()->json(null, 204);
+        return format_json_response($todo, ['Todo deleted']);
     }
 }
