@@ -8,6 +8,8 @@ export interface ApiResponse<T> {
   status: ApiResponseStatus;
 }
 
+export type ApiPromise<T> = Promise<ApiResponse<T>>;
+
 export interface ListPayload<T> {
   items: Array<T>;
 }

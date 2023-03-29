@@ -1,4 +1,4 @@
-import {ApiResponse, ListPayload} from '../typings/api';
+import {ApiPromise, ListPayload} from '../typings/api';
 import {
   TodoListResponse,
   TodoListStoreRequest,
@@ -9,27 +9,23 @@ import {BaseApi} from './base';
 export class TodoListApi extends BaseApi {
   baseUrl = 'todo_lists';
 
-  async index(): Promise<ApiResponse<ListPayload<TodoListResponse>>> {
+  async index(): ApiPromise<ListPayload<TodoListResponse>> {
     return this.get(this.baseUrl);
   }
 
-  async show(id: number): Promise<ApiResponse<TodoListResponse>> {
+  async show(id: number): ApiPromise<TodoListResponse> {
     return this.get(`${this.baseUrl}/${id}`);
   }
 
-  async store(
-    data: TodoListStoreRequest,
-  ): Promise<ApiResponse<TodoListResponse>> {
+  async store(data: TodoListStoreRequest): ApiPromise<TodoListResponse> {
     return this.post(this.baseUrl, data);
   }
 
-  async update(
-    data: TodoListUpdateRequest,
-  ): Promise<ApiResponse<TodoListResponse>> {
+  async update(data: TodoListUpdateRequest): ApiPromise<TodoListResponse> {
     return this.put(`${this.baseUrl}/${data.id}`, data);
   }
 
-  async remove(id: number): Promise<ApiResponse<TodoListResponse>> {
+  async remove(id: number): ApiPromise<TodoListResponse> {
     return this.delete(`${this.baseUrl}/${id}`);
   }
 }

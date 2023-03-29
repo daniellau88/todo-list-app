@@ -1,3 +1,10 @@
+export interface TodoListCollectionResponse {
+  id: number;
+  name: string;
+  created_at: string;
+  updated_at: string;
+}
+
 export interface TodoListResponse {
   id: number;
   name: string;
@@ -15,11 +22,14 @@ export interface TodoResponse {
   updated_at: string;
 }
 
-export interface EntityBase {
-  last_queried_at: number;
+export interface TodoListMiniEntity {
+  id: number;
+  name: string;
+  created_at: string;
+  updated_at: string;
 }
 
-export interface TodoListEntity extends EntityBase {
+export interface TodoListEntity {
   id: number;
   name: string;
   created_at: string;
@@ -27,7 +37,7 @@ export interface TodoListEntity extends EntityBase {
   todos: Array<number>;
 }
 
-export interface TodoEntity extends EntityBase {
+export interface TodoEntity {
   id: number;
   description: string;
   is_done: boolean;
