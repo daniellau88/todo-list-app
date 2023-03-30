@@ -7,25 +7,33 @@ import {
 import {BaseApi} from './base';
 
 export class TodoApi extends BaseApi {
-  baseUrl = 'todos';
-
-  async index(): ApiPromise<ListPayload<TodoResponse>> {
-    return this.get(this.baseUrl);
+  private getBaseUrl(todoListId: number) {
+    return `todo_lists/${todoListId}/todos`;
   }
 
-  async show(id: number): ApiPromise<TodoResponse> {
-    return this.get(`${this.baseUrl}/${id}`);
+  async index(todoListId: number): ApiPromise<ListPayload<TodoResponse>> {
+    return this.get(this.getBaseUrl(todoListId));
   }
 
-  async store(data: TodoStoreRequest): ApiPromise<TodoResponse> {
-    return this.post(this.baseUrl, data);
+  async show(todoListId: number, id: number): ApiPromise<TodoResponse> {
+    return this.get(`${this.getBaseUrl(todoListId)}/${id}`);
   }
 
-  async update(data: TodoUpdateRequest): ApiPromise<TodoResponse> {
-    return this.put(`${this.baseUrl}/${data.id}`, data);
+  async store(
+    todoListId: number,
+    data: TodoStoreRequest,
+  ): ApiPromise<TodoResponse> {
+    return this.post(`${this.getBaseUrl(todoListId)}`, data);
   }
 
-  async remove(id: number): ApiPromise<TodoResponse> {
-    return this.delete(`${this.baseUrl}/${id}`);
+  async update(
+    todoListId: number,
+    data: TodoUpdateRequest,
+  ): ApiPromise<TodoResponse> {
+    return this.put(`${this.getBaseUrl(todoListId)}/${data.id}`, data);
+  }
+
+  async remove(todoListId: number, id: number): ApiPromise<TodoResponse> {
+    return this.delete(`${this.getBaseUrl(todoListId)}/${id}`);
   }
 }

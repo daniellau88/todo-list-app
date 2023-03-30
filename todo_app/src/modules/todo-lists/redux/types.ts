@@ -1,7 +1,14 @@
-import {TodoListEntity, TodoListMiniEntity} from '../../../typings/model';
-import {EntityCollection, EntityStore} from '../../../typings/store';
+import {TodoEntity, TodoListEntity} from '../../../typings/model';
+import {
+  EntityCollection,
+  EntityCollectionSet,
+  EntityStore,
+} from '../../../typings/store';
 
 export interface TodoListState {
   collectionTodoLists: EntityCollection;
-  todoLists: EntityStore<TodoListMiniEntity, TodoListEntity>;
+  todoLists: EntityStore<TodoListEntity, TodoListEntity>;
+
+  collectionSetTodoListTodos: EntityCollectionSet;
+  todos: EntityStore<TodoEntity, TodoEntity>;
 }

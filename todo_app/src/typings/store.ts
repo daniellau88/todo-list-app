@@ -27,3 +27,7 @@ export interface EntityCollection {
 export interface CollectionInfo {
   ids: Array<number>;
 }
+
+export interface EntityCollectionSet {
+  byId: {[id: number]: EntityCollection};
+}

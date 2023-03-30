@@ -2,6 +2,7 @@ import {ApiPromise, ApiResponseStatus, ListPayload} from '../typings/api';
 import {
   CollectionInfo,
   EntityCollection,
+  EntityCollectionSet,
   EntityMetadata,
   EntityStore,
   SelectionKey,
@@ -21,6 +22,12 @@ export const createEntityCollection = (): EntityCollection => {
   return {
     ids: [],
     last_update: 0,
+  };
+};
+
+export const createEntityCollectionSet = (): EntityCollectionSet => {
+  return {
+    byId: [],
   };
 };
 
@@ -44,8 +51,9 @@ export const saveEntityToStore = <T extends WithId, U extends T = T>(
 export const saveEntityArrayToStore = <T extends WithId, U extends T = T>(
   store: EntityStore<T, U>,
   entityArray: Array<T>,
+  isMini: boolean = true,
 ) => {
-  entityArray.forEach(x => saveEntityToStore(store, x, true));
+  entityArray.forEach(x => saveEntityToStore(store, x, isMini));
 };
 
 export const saveInfoToCollection = (
@@ -56,11 +64,22 @@ export const saveInfoToCollection = (
   collection.last_update = Date.now();
 };
 
+export const saveInfoToCollectionSet = (
+  collectionSet: EntityCollectionSet,
+  id: number,
+  info: CollectionInfo,
+) => {
+  collectionSet.byId[id] = {
+    ...info,
+    last_update: Date.now(),
+  };
+};
+
 export const queryEntityCollection = <T extends WithId>(
   getProperty: () => EntityCollection,
   fetchData: () => ApiPromise<ListPayload<T>>,
   saveToCollection: (info: CollectionInfo) => void,
-  saveToStore: (entityArray: Array<T>) => void,
+  saveToStore: (responseArray: Array<T>) => void,
   forceReload: boolean = false,
 ): ApiPromise<EntityCollection> => {
   const initialProperty = getProperty();
@@ -86,6 +105,52 @@ export const queryEntityCollection = <T extends WithId>(
   });
 };
 
+export const queryEntity = <T extends WithId, U extends WithId>(
+  getProperty: () => (U & EntityMetadata) | undefined,
+  fetchData: () => ApiPromise<T>,
+  saveToStore: (response: T) => void,
+  forceReload: boolean = false,
+): ApiPromise<U & EntityMetadata> => {
+  const initialProperty = getProperty();
+  if (initialProperty !== undefined) {
+    const hasExisting = initialProperty.last_update > 0;
+    const isStale = initialProperty.last_update + MAX_STALE < Date.now();
+
+    if (hasExisting && !forceReload && !isStale) {
+      return Promise.resolve({
+        status: ApiResponseStatus.Success,
+        payload: initialProperty,
+        messages: [],
+      });
+    }
+  }
+
+  return fetchData().then(response => {
+    const data = response.payload;
+    saveToStore(data);
+    return {...response, payload: getProperty()!};
+  });
+};
+
+export const queryEntityCollectionSet = <T extends WithId>(
+  getProperty: () => EntityCollectionSet,
+  id: number,
+  fetchData: () => ApiPromise<ListPayload<T>>,
+  saveToCollection: (info: CollectionInfo) => void,
+  saveToStore: (responseArray: Array<T>) => void,
+  forceReload: boolean = false,
+): ApiPromise<EntityCollection> => {
+  return queryEntityCollection(
+    () => {
+      const store = getProperty();
+      return store.byId[id] || createEntityCollection();
+    },
+    fetchData,
+    saveToCollection,
+    saveToStore,
+    forceReload,
+  );
+};
 export const selectMiniEntity = <T extends WithId, U extends T = T>(
   store: EntityStore<T, U>,
   id: SelectionKey,
@@ -100,4 +165,11 @@ export const selectEntity = <T extends WithId, U extends T = T>(
   return store.byId[id] !== undefined && store.byId[id].last_full_update > 0
     ? (store.byId[id] as U & EntityMetadata)
     : undefined;
+};
+
+export const selectCollectionSet = (
+  store: EntityCollectionSet,
+  id: SelectionKey,
+): EntityCollection => {
+  return store.byId[id] || createEntityCollection();
 };

@@ -1,18 +1,8 @@
-import {DateTime} from 'luxon';
-
-export interface TodoListCollectionResponse {
-  id: number;
-  name: string;
-  created_at: string;
-  updated_at: string;
-}
-
 export interface TodoListResponse {
   id: number;
   name: string;
   created_at: string;
   updated_at: string;
-  todos: Array<TodoResponse>;
 }
 
 export interface TodoResponse {
@@ -24,19 +14,11 @@ export interface TodoResponse {
   updated_at: string;
 }
 
-export interface TodoListMiniEntity {
-  id: number;
-  name: string;
-  created_at: number;
-  updated_at: number;
-}
-
 export interface TodoListEntity {
   id: number;
   name: string;
   created_at: number;
   updated_at: number;
-  todos: Array<number>;
 }
 
 export interface TodoEntity {

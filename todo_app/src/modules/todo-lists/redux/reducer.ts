@@ -2,16 +2,17 @@ import {PayloadAction, createSlice} from '@reduxjs/toolkit';
 import {TodoListState} from './types';
 import {
   createEntityCollection,
+  createEntityCollectionSet,
   createEntityStore,
   saveEntityArrayToStore,
   saveEntityToStore,
   saveInfoToCollection,
+  saveInfoToCollectionSet,
 } from '../../../utils/store';
 import {
-  TodoListCollectionResponse,
   TodoListEntity,
-  TodoListMiniEntity,
   TodoListResponse,
+  TodoResponse,
 } from '../../../typings/model';
 import {CollectionInfo} from '../../../typings/store';
 import {convertDateStringToDateSinceEpoch} from '../../../utils/date';
@@ -19,6 +20,9 @@ import {convertDateStringToDateSinceEpoch} from '../../../utils/date';
 const initialState: TodoListState = {
   collectionTodoLists: createEntityCollection(),
   todoLists: createEntityStore(),
+
+  collectionSetTodoListTodos: createEntityCollectionSet(),
+  todos: createEntityStore(),
 };
 
 const todoListSlice = createSlice({
@@ -27,7 +31,7 @@ const todoListSlice = createSlice({
   reducers: {
     saveTodoListArray: (
       state,
-      action: PayloadAction<Array<TodoListCollectionResponse>>,
+      action: PayloadAction<Array<TodoListResponse>>,
     ) => {
       const data = action.payload.map(x => {
         return {
@@ -36,7 +40,7 @@ const todoListSlice = createSlice({
           updated_at: convertDateStringToDateSinceEpoch(x.updated_at),
         };
       });
-      saveEntityArrayToStore(state.todoLists, data);
+      saveEntityArrayToStore(state.todoLists, data, false);
     },
     saveTodoList: (state, action: PayloadAction<TodoListResponse>) => {
       const data = action.payload;
@@ -44,9 +48,8 @@ const todoListSlice = createSlice({
         ...data,
         created_at: convertDateStringToDateSinceEpoch(data.created_at),
         updated_at: convertDateStringToDateSinceEpoch(data.updated_at),
-        todos: data.todos.map(x => x.id),
       };
-      saveEntityToStore<TodoListMiniEntity, TodoListEntity>(
+      saveEntityToStore<TodoListEntity, TodoListEntity>(
         state.todoLists,
         entity,
       );
@@ -57,6 +60,26 @@ const todoListSlice = createSlice({
     ) => {
       const data = action.payload;
       saveInfoToCollection(state.collectionTodoLists, data);
+    },
+    saveTodoArray: (state, action: PayloadAction<Array<TodoResponse>>) => {
+      const data = action.payload.map(x => {
+        return {
+          ...x,
+          created_at: convertDateStringToDateSinceEpoch(x.created_at),
+          updated_at: convertDateStringToDateSinceEpoch(x.updated_at),
+        };
+      });
+      saveEntityArrayToStore(state.todos, data, false);
+    },
+    updateTodoListTodoCollectionSet: (
+      state,
+      action: PayloadAction<{id: number; info: CollectionInfo}>,
+    ) => {
+      saveInfoToCollectionSet(
+        state.collectionSetTodoListTodos,
+        action.payload.id,
+        action.payload.info,
+      );
     },
   },
 });
