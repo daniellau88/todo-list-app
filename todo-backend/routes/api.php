@@ -21,13 +21,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 
-Route::prefix('todos')->group(function () {
-    Route::get('', [TodoController::class, 'index']);
-    Route::get('/{id}', [TodoController::class, 'show']);
-    Route::post('', [TodoController::class, 'store']);
-    Route::put('/{id}', [TodoController::class, 'update']);
-    Route::delete('/{id}', [TodoController::class, 'delete']);
-});
 
 
 Route::prefix('todo_lists')->group(function () {
@@ -36,4 +29,12 @@ Route::prefix('todo_lists')->group(function () {
     Route::post('', [TodoListController::class, 'store']);
     Route::put('/{id}', [TodoListController::class, 'update']);
     Route::delete('/{id}', [TodoListController::class, 'delete']);
+
+    Route::prefix('/{todo_list_id}/todos')->group(function () {
+        Route::get('', [TodoController::class, 'index']);
+        Route::get('/{id}', [TodoController::class, 'show']);
+        Route::post('', [TodoController::class, 'store']);
+        Route::put('/{id}', [TodoController::class, 'update']);
+        Route::delete('/{id}', [TodoController::class, 'delete']);
+    });
 });

@@ -15,7 +15,7 @@ class TodoListController extends Controller
  
     public function show($id)
     {
-        $todo_list = TodoList::with('todos')->find($id);
+        $todo_list = TodoList::find($id);
         if (is_null($todo_list)) return format_json_response((object)[], ['Cannot find todolist'], ResponseStatus::NotFound);
         return format_json_response($todo_list);
     }
