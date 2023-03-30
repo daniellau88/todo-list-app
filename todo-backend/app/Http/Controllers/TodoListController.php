@@ -10,7 +10,7 @@ class TodoListController extends Controller
 {
     public function index()
     {
-        return format_json_response(['items' => TodoList::get()]);
+        return format_json_response(['items' => TodoList::orderBy('id', 'desc')->get()]);
     }
  
     public function show($id)
