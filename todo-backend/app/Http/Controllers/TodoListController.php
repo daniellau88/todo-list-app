@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Helpers\ResponseStatus;
 use App\Models\TodoList;
 use Illuminate\Http\Request;
 
@@ -9,12 +10,14 @@ class TodoListController extends Controller
 {
     public function index()
     {
-        return format_json_response(['items' => TodoList::with('todos')->get()]);
+        return format_json_response(['items' => TodoList::get()]);
     }
  
-    public function show(TodoList $todo)
+    public function show($id)
     {
-        return format_json_response($todo);
+        $todo_list = TodoList::with('todos')->find($id);
+        if (is_null($todo_list)) return format_json_response((object)[], ['Cannot find todolist'], ResponseStatus::NotFound);
+        return format_json_response($todo_list);
     }
 
     public function store(Request $request)
@@ -24,15 +27,20 @@ class TodoListController extends Controller
         return format_json_response($todo_list, ['Todolist added']);
     }
 
-    public function update(Request $request, TodoList $todo_list)
+    public function update(Request $request, $id)
     {
+        $todo_list = TodoList::find($id);
+        if (is_null($todo_list)) return format_json_response((object)[], ['Cannot find todolist'], ResponseStatus::NotFound);
         $todo_list->update($request->all());
 
         return format_json_response($todo_list, ['Todolist updated']);
     }
 
-    public function delete(Request $request, TodoList $todo_list)
+    public function delete(Request $request, $id)
     {
+        $todo_list = TodoList::find($id);
+        if (is_null($todo_list)) return format_json_response((object)[], ['Cannot find todolist'], ResponseStatus::NotFound);
+
         foreach ($todo_list->todos() as $todo) {
             $todo->delete();
         }
