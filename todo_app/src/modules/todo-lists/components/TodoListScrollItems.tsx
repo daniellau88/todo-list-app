@@ -1,8 +1,9 @@
 import React from 'react';
 
-import {Text} from 'react-native';
 import {useAppSelector} from '../../../reducer';
 import {getTodoListMiniEntity} from '../redux/selectors';
+import {Card, Paragraph, Text, Title} from 'react-native-paper';
+import {StyleSheet, View} from 'react-native';
 
 interface Props {
   id: number;
@@ -17,7 +18,25 @@ const TodoListScrollItems = (props: Props): JSX.Element => {
     return <Text>Invalid</Text>;
   }
 
-  return <Text>{todoList?.name}</Text>;
+  return (
+    <Card>
+      <Card.Content>
+        <Title>{todoList.name}</Title>
+        <Paragraph>TODO: Summary</Paragraph>
+        <View>
+          <Text style={styles.dateText}>
+            Last updated {todoList.updated_at.toRelative()}
+          </Text>
+        </View>
+      </Card.Content>
+    </Card>
+  );
 };
+
+const styles = StyleSheet.create({
+  dateText: {
+    textAlign: 'right',
+  },
+});
 
 export default TodoListScrollItems;

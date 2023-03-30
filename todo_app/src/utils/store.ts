@@ -10,7 +10,10 @@ import {
 
 const MAX_STALE = 120000; // 120 seconds
 
-export const createEntityStore = <T extends WithId>(): EntityStore<T> => {
+export const createEntityStore = <
+  T extends WithId,
+  U extends T = T,
+>(): EntityStore<T, U> => {
   return {byId: {}};
 };
 
@@ -36,6 +39,7 @@ export const saveEntityToStore = <T extends WithId, U extends T = T>(
     last_update: Date.now(),
     last_full_update: isMini ? lastFullUpdate : Date.now(),
   };
+  console.log(store.byId[entity.id]);
 };
 
 export const saveEntityArrayToStore = <T extends WithId, U extends T = T>(
