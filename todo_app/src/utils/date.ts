@@ -1,5 +1,13 @@
 import {DateTime} from 'luxon';
 
-export const convertDateStringToDate = (dateString: string): DateTime => {
-  return DateTime.fromISO(dateString);
+export const convertDateStringToDateSinceEpoch = (
+  dateString: string,
+): number => {
+  return DateTime.fromISO(dateString).toMillis();
+};
+
+export const convertDateSinceEpochToDateTime = (
+  dateSinceEpoch: number,
+): DateTime => {
+  return DateTime.fromMillis(dateSinceEpoch);
 };

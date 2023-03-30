@@ -4,6 +4,7 @@ import {useAppSelector} from '../../../reducer';
 import {getTodoListMiniEntity} from '../redux/selectors';
 import {Card, Paragraph, Text, Title} from 'react-native-paper';
 import {StyleSheet, View} from 'react-native';
+import {convertDateSinceEpochToDateTime} from '../../../utils/date';
 
 interface Props {
   id: number;
@@ -25,7 +26,8 @@ const TodoListScrollItems = (props: Props): JSX.Element => {
         <Paragraph>TODO: Summary</Paragraph>
         <View>
           <Text style={styles.dateText}>
-            Last updated {todoList.updated_at.toRelative()}
+            Last updated{' '}
+            {convertDateSinceEpochToDateTime(todoList.updated_at).toRelative()}
           </Text>
         </View>
       </Card.Content>

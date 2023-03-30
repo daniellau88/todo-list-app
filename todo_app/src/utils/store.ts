@@ -39,7 +39,6 @@ export const saveEntityToStore = <T extends WithId, U extends T = T>(
     last_update: Date.now(),
     last_full_update: isMini ? lastFullUpdate : Date.now(),
   };
-  console.log(store.byId[entity.id]);
 };
 
 export const saveEntityArrayToStore = <T extends WithId, U extends T = T>(

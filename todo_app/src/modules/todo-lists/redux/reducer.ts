@@ -14,7 +14,7 @@ import {
   TodoListResponse,
 } from '../../../typings/model';
 import {CollectionInfo} from '../../../typings/store';
-import {convertDateStringToDate} from '../../../utils/date';
+import {convertDateStringToDateSinceEpoch} from '../../../utils/date';
 
 const initialState: TodoListState = {
   collectionTodoLists: createEntityCollection(),
@@ -32,8 +32,8 @@ const todoListSlice = createSlice({
       const data = action.payload.map(x => {
         return {
           ...x,
-          created_at: convertDateStringToDate(x.created_at),
-          updated_at: convertDateStringToDate(x.updated_at),
+          created_at: convertDateStringToDateSinceEpoch(x.created_at),
+          updated_at: convertDateStringToDateSinceEpoch(x.updated_at),
         };
       });
       saveEntityArrayToStore(state.todoLists, data);
@@ -42,8 +42,8 @@ const todoListSlice = createSlice({
       const data = action.payload;
       const entity: TodoListEntity = {
         ...data,
-        created_at: convertDateStringToDate(data.created_at),
-        updated_at: convertDateStringToDate(data.updated_at),
+        created_at: convertDateStringToDateSinceEpoch(data.created_at),
+        updated_at: convertDateStringToDateSinceEpoch(data.updated_at),
         todos: data.todos.map(x => x.id),
       };
       saveEntityToStore<TodoListMiniEntity, TodoListEntity>(

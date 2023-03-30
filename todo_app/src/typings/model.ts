@@ -27,15 +27,15 @@ export interface TodoResponse {
 export interface TodoListMiniEntity {
   id: number;
   name: string;
-  created_at: DateTime;
-  updated_at: DateTime;
+  created_at: number;
+  updated_at: number;
 }
 
 export interface TodoListEntity {
   id: number;
   name: string;
-  created_at: DateTime;
-  updated_at: DateTime;
+  created_at: number;
+  updated_at: number;
   todos: Array<number>;
 }
 
@@ -43,8 +43,8 @@ export interface TodoEntity {
   id: number;
   description: string;
   is_done: boolean;
-  created_at: DateTime;
-  updated_at: DateTime;
+  created_at: number;
+  updated_at: number;
   todo_list_id: number;
 }
 
