@@ -24,14 +24,16 @@ const TodoListScrollView = (): JSX.Element => {
   };
 
   React.useEffect(() => {
-    handleApiRequests(dispatch, dispatch(loadTodoLists()));
+    onRefresh(false);
   }, []);
 
-  const onRefresh = () => {
+  const onRefresh = (forceReload: boolean = true) => {
     setIsRefreshing(true);
-    handleApiRequests(dispatch, dispatch(loadTodoLists(true))).finally(() => {
-      setIsRefreshing(false);
-    });
+    handleApiRequests(dispatch, dispatch(loadTodoLists(forceReload))).finally(
+      () => {
+        setIsRefreshing(false);
+      },
+    );
   };
 
   const todoIds = useAppSelector(getTodoListCollection()).ids;
