@@ -1,7 +1,7 @@
 import axios from 'axios';
 import {ApiResponse} from '../typings/api';
 
-axios.defaults.baseURL = 'http://10.42.0.1:8000/api/';
+axios.defaults.baseURL = 'https://todo.dlau.one/api/';
 
 export class BaseApi {
   protected async get<T>(url: string, params?: any): Promise<ApiResponse<T>> {

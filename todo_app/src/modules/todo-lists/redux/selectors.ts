@@ -34,3 +34,9 @@ export const getTodoListTodoCollection = (id: SelectionKey) => {
     );
   };
 };
+
+export const getTodoMiniEntity = (id: SelectionKey) => {
+  return (state: RootState) => {
+    return selectMiniEntity(getLocalState(state).todos, id);
+  };
+};
