@@ -11,8 +11,6 @@ const TodoListTodosScreen = (): JSX.Element => {
   const todoListId = route.params.todoListId;
   const todoList = useSelector(getTodoListEntity(todoListId));
 
-  React.useEffect(() => {}, []);
-
   if (!todoList) {
     return <Text>Invalid Todo List</Text>;
   }

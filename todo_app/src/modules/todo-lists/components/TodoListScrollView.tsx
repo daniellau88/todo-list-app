@@ -12,6 +12,7 @@ import {loadTodoLists} from '../redux/operations';
 import {useAppDispatch, useAppSelector} from '../../../reducer';
 import {getTodoListCollection} from '../redux/selectors';
 import TodoListScrollItems from './TodoListScrollItems';
+import {handleApiRequests} from '../../../utils/api';
 
 const TodoListScrollView = (): JSX.Element => {
   const dispatch = useAppDispatch();
@@ -23,12 +24,12 @@ const TodoListScrollView = (): JSX.Element => {
   };
 
   React.useEffect(() => {
-    dispatch(loadTodoLists());
+    handleApiRequests(dispatch, dispatch(loadTodoLists()));
   }, []);
 
   const onRefresh = () => {
     setIsRefreshing(true);
-    dispatch(loadTodoLists(true)).finally(() => {
+    handleApiRequests(dispatch, dispatch(loadTodoLists(true))).finally(() => {
       setIsRefreshing(false);
     });
   };

@@ -15,6 +15,7 @@ import {getTodoListEntity, getTodoListTodoCollection} from '../redux/selectors';
 import {Card, Title} from 'react-native-paper';
 import {convertDateSinceEpochToDateTime} from '../../../utils/date';
 import TodoListTodosScrollItems from './TodoListTodosScrollItems';
+import {handleApiRequests} from '../../../utils/api';
 
 interface Props {
   todoListId: number;
@@ -36,19 +37,18 @@ const TodoListTodosScrollView = (props: Props): JSX.Element => {
   };
 
   React.useEffect(() => {
-    handleOnRefresh()();
+    handleOnRefresh(false);
   }, []);
 
-  const handleOnRefresh = (forceReload: boolean = false) => {
-    return () => {
-      setIsRefreshing(true);
-      Promise.all([
-        dispatch(loadTodoList(todoListId, forceReload)),
-        dispatch(loadTodoListTodos(todoListId, forceReload)),
-      ]).finally(() => {
-        setIsRefreshing(false);
-      });
-    };
+  const handleOnRefresh = (forceReload: boolean = true) => {
+    setIsRefreshing(true);
+    handleApiRequests(
+      dispatch,
+      dispatch(loadTodoList(todoListId, forceReload)),
+      dispatch(loadTodoListTodos(todoListId, forceReload)),
+    ).finally(() => {
+      setIsRefreshing(false);
+    });
   };
 
   if (!todoList) {
@@ -60,10 +60,7 @@ const TodoListTodosScrollView = (props: Props): JSX.Element => {
       contentInsetAdjustmentBehavior="automatic"
       style={backgroundStyle}
       refreshControl={
-        <RefreshControl
-          refreshing={isRefreshing}
-          onRefresh={handleOnRefresh(true)}
-        />
+        <RefreshControl refreshing={isRefreshing} onRefresh={handleOnRefresh} />
       }>
       <View
         style={{
