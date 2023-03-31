@@ -1,6 +1,12 @@
 import React from 'react';
 
-import {RefreshControl, ScrollView, View, useColorScheme} from 'react-native';
+import {
+  RefreshControl,
+  ScrollView,
+  Text,
+  View,
+  useColorScheme,
+} from 'react-native';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import {loadTodoLists} from '../redux/operations';
 import {useAppDispatch, useAppSelector} from '../../../reducer';
@@ -22,7 +28,7 @@ const TodoListScrollView = (): JSX.Element => {
 
   const onRefresh = () => {
     setIsRefreshing(true);
-    dispatch(loadTodoLists(true)).then(_ => {
+    dispatch(loadTodoLists(true)).finally(() => {
       setIsRefreshing(false);
     });
   };
@@ -40,6 +46,7 @@ const TodoListScrollView = (): JSX.Element => {
         style={{
           backgroundColor: isDarkMode ? Colors.black : Colors.white,
         }}>
+        {todoIds.length === 0 && <Text>No todos to show</Text>}
         {todoIds.map(x => (
           <TodoListScrollItems key={x} id={x} />
         ))}
