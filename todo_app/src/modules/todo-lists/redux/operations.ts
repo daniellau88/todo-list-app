@@ -2,6 +2,7 @@ import {AnyAction, ThunkAction} from '@reduxjs/toolkit';
 import {todoApi, todoListApi} from '../../../api';
 import {CollectionInfo, EntityCollection} from '../../../typings/store';
 import {
+  executeOperationEntity,
   queryEntity,
   queryEntityCollection,
   queryEntityCollectionSet,
@@ -10,6 +11,7 @@ import {
 import {
   TodoListEntity,
   TodoListResponse,
+  TodoListStoreRequest,
   TodoResponse,
 } from '../../../typings/model';
 import {todoListAction} from './reducer';
@@ -48,6 +50,19 @@ export const loadTodoList = (
       (response: TodoListResponse) =>
         dispatch(todoListAction.saveTodoList(response)),
       forceReload,
+    );
+  };
+};
+
+export const storeTodoList = (
+  req: TodoListStoreRequest,
+): ThunkAction<ApiPromise<TodoListEntity>, RootState, undefined, AnyAction> => {
+  return (dispatch, getState) => {
+    return executeOperationEntity(
+      () => getState().todoList.todoLists,
+      () => todoListApi.store(req),
+      response => dispatch(todoListAction.saveTodoList(response)),
+      () => dispatch(todoListAction.resetTodoListCollection()),
     );
   };
 };

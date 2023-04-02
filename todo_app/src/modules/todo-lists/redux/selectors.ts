@@ -20,17 +20,17 @@ export const getTodoListMiniEntity = (id: SelectionKey) => {
   };
 };
 
-export const getTodoListEntity = (id: SelectionKey) => {
+export const getTodoListEntity = (id?: SelectionKey) => {
   return (state: RootState) => {
-    return selectEntity(getLocalState(state).todoLists, id);
+    return selectEntity(getLocalState(state).todoLists, id || 0);
   };
 };
 
-export const getTodoListTodoCollection = (id: SelectionKey) => {
+export const getTodoListTodoCollection = (id?: SelectionKey) => {
   return (state: RootState) => {
     return selectCollectionSet(
       getLocalState(state).collectionSetTodoListTodos,
-      id,
+      id || 0,
     );
   };
 };

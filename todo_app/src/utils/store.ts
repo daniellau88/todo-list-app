@@ -113,7 +113,7 @@ export const queryEntity = <T extends WithId, U extends WithId>(
 ): ApiPromise<U & EntityMetadata> => {
   const initialProperty = getProperty();
   if (initialProperty !== undefined) {
-    const hasExisting = initialProperty.last_update > 0;
+    const hasExisting = initialProperty.last_full_update > 0;
     const isStale = initialProperty.last_update + MAX_STALE < Date.now();
 
     if (hasExisting && !forceReload && !isStale) {
@@ -151,6 +151,21 @@ export const queryEntityCollectionSet = <T extends WithId>(
     forceReload,
   );
 };
+
+export const executeOperationEntity = <T extends WithId, U extends WithId>(
+  getStore: () => EntityStore<U>,
+  executeOperation: () => ApiPromise<T>,
+  saveToStore: (response: T) => void,
+  runAfter?: () => void,
+): ApiPromise<U & EntityMetadata> => {
+  return executeOperation().then(response => {
+    saveToStore(response.payload);
+    const newPayload = selectEntity(getStore(), response.payload.id)!;
+    runAfter && runAfter();
+    return {...response, payload: newPayload};
+  });
+};
+
 export const selectMiniEntity = <T extends WithId, U extends T = T>(
   store: EntityStore<T, U>,
   id: SelectionKey,
@@ -172,4 +187,9 @@ export const selectCollectionSet = (
   id: SelectionKey,
 ): EntityCollection => {
   return store.byId[id] || createEntityCollection();
+};
+
+export const resetEntityCollection = (collection: EntityCollection) => {
+  collection.ids = [];
+  collection.last_update = 0;
 };

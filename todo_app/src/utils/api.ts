@@ -9,7 +9,7 @@ export const handleApiRequests = (
   return Promise.all(request.map(x => handleApiRequest(dispatch, x)));
 };
 
-const handleApiRequest = <T>(
+export const handleApiRequest = <T>(
   dispatch: AppDispatch,
   request: ApiPromise<T>,
 ): ApiPromise<T> => {

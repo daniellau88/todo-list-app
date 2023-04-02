@@ -4,6 +4,7 @@ import {
   createEntityCollection,
   createEntityCollectionSet,
   createEntityStore,
+  resetEntityCollection,
   saveEntityArrayToStore,
   saveEntityToStore,
   saveInfoToCollection,
@@ -60,6 +61,9 @@ const todoListSlice = createSlice({
     ) => {
       const data = action.payload;
       saveInfoToCollection(state.collectionTodoLists, data);
+    },
+    resetTodoListCollection: state => {
+      resetEntityCollection(state.collectionTodoLists);
     },
     saveTodoArray: (state, action: PayloadAction<Array<TodoResponse>>) => {
       const data = action.payload.map(x => {

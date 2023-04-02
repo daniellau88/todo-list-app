@@ -8,7 +8,7 @@ export enum ScreenName {
 
 type RootStackParamList = {
   [ScreenName.TodoList]: undefined;
-  [ScreenName.TodoListTodos]: {todoListId: number};
+  [ScreenName.TodoListTodos]: {todoListId?: number; isCreate: boolean};
 };
 
 type Props = NativeStackScreenProps<RootStackParamList, ScreenName>;
