@@ -1,5 +1,5 @@
 import {AnyAction} from 'redux';
-import {RootState} from '../../../reducer';
+import {RootState} from '../../../store';
 import {NotificationMiniEntity} from './types';
 import {ThunkAction} from '@reduxjs/toolkit';
 import {notificationAction} from './reducer';

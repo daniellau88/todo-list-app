@@ -1,4 +1,4 @@
-import {RootState} from '../../../reducer';
+import {RootState} from '../../../store';
 import {SelectionKey} from '../../../typings/store';
 import {
   selectCollectionSet,

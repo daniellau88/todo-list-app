@@ -1,5 +1,5 @@
 import {AnyAction} from 'redux';
-import {RootState} from '../../../reducer';
+import {RootState} from '../../../store';
 import {ThunkAction} from '@reduxjs/toolkit';
 import {appInfoAction} from './reducer';
 import {getAppIsOnline} from './selectors';

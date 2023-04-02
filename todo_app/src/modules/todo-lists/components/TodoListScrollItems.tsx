@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {useAppSelector} from '../../../reducer';
+import {useAppSelector} from '../../../store';
 import {getTodoListMiniEntity} from '../redux/selectors';
 import {Card, Paragraph, Text, Title} from 'react-native-paper';
 import {StyleSheet, View} from 'react-native';

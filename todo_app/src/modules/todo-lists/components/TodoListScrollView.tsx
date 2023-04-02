@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import {loadTodoLists} from '../redux/operations';
-import {useAppDispatch, useAppSelector} from '../../../reducer';
+import {useAppDispatch, useAppSelector} from '../../../store';
 import {getTodoListCollection} from '../redux/selectors';
 import TodoListScrollItems from './TodoListScrollItems';
 import {handleApiRequests} from '../../../utils/api';

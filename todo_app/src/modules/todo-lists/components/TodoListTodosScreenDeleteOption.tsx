@@ -6,7 +6,7 @@ import {View} from 'react-native';
 import {Button, Dialog, IconButton, Portal, Text} from 'react-native-paper';
 import {handleApiRequest} from '../../../utils/api';
 import {deleteTodoList} from '../redux/operations';
-import {useAppDispatch} from '../../../reducer';
+import {useAppDispatch} from '../../../store';
 
 const TodoListTodosScreenDeleteOption = (): JSX.Element => {
   const route = useAppRoute<ScreenName.TodoListTodos>();

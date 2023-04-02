@@ -2,7 +2,7 @@ import React from 'react';
 
 import {ScrollView, StyleSheet, Text, useColorScheme} from 'react-native';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
-import {useAppDispatch} from '../../../reducer';
+import {useAppDispatch} from '../../../store';
 import {Card} from 'react-native-paper';
 import {handleApiRequest} from '../../../utils/api';
 import {storeTodoList} from '../redux/operations';

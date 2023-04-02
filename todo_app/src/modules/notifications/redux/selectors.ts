@@ -1,4 +1,4 @@
-import {RootState} from '../../../reducer';
+import {RootState} from '../../../store';
 
 const getLocalState = (state: RootState) => state.notification;
 

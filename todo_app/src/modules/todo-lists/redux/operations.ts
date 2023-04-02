@@ -19,7 +19,7 @@ import {
   TodoUpdateRequest,
 } from '../../../typings/model';
 import {todoListAction} from './reducer';
-import {RootState} from '../../../reducer';
+import {RootState} from '../../../store';
 import {ApiPromise} from '../../../typings/api';
 
 export const loadTodoLists = (

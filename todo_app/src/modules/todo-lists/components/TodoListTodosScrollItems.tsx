@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {useAppDispatch, useAppSelector} from '../../../reducer';
+import {useAppDispatch, useAppSelector} from '../../../store';
 import {getTodoMiniEntity} from '../redux/selectors';
 import {Checkbox, Text} from 'react-native-paper';
 import {StyleSheet, View} from 'react-native';

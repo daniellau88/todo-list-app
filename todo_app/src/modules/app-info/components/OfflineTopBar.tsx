@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {Appbar} from 'react-native-paper';
-import {useAppSelector} from '../../../reducer';
+import {useAppSelector} from '../../../store';
 import {getAppIsOnline} from '../redux/selectors';
 import {StyleSheet, View} from 'react-native';
 

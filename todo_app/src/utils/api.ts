@@ -1,6 +1,6 @@
 import {setIsOnline} from '../modules/app-info/redux/operations';
 import {enqueueNotification} from '../modules/notifications/redux/operations';
-import {AppDispatch} from '../reducer';
+import {AppDispatch} from '../store';
 import {ApiPromise, ApiResponseStatus} from '../typings/api';
 
 export const handleApiRequests = (
@@ -31,7 +31,6 @@ export const handleApiRequest = <T>(
     .catch(x => {
       if (x.toJSON().message === 'Network Error') {
         dispatch(setIsOnline(false));
-        dispatch(enqueueNotification([{message: 'Connection Error'}]));
       }
       return {
         messages: [],

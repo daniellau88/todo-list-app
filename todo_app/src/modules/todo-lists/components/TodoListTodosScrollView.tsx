@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import {loadTodoList, loadTodoListTodos} from '../redux/operations';
-import {useAppDispatch, useAppSelector} from '../../../reducer';
+import {useAppDispatch, useAppSelector} from '../../../store';
 import {handleApiRequests} from '../../../utils/api';
 import {getTodoListEntity, getTodoListTodoCollection} from '../redux/selectors';
 import {useIsFocused} from '@react-navigation/native';

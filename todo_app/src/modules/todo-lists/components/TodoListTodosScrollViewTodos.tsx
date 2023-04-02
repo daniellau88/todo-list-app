@@ -1,6 +1,6 @@
 import React from 'react';
 import {storeTodo} from '../redux/operations';
-import {useAppDispatch} from '../../../reducer';
+import {useAppDispatch} from '../../../store';
 import {Button, Card} from 'react-native-paper';
 import {handleApiRequest} from '../../../utils/api';
 import FlatTextInput from '../../../components/FlatTextInput';

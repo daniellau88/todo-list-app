@@ -1,5 +1,5 @@
 import React from 'react';
-import {useAppDispatch, useAppSelector} from '../../../reducer';
+import {useAppDispatch, useAppSelector} from '../../../store';
 import {getTopNotification} from '../redux/selectors';
 import {Snackbar} from 'react-native-paper';
 import {dequeueNotification} from '../redux/operations';

@@ -2,7 +2,7 @@ import React from 'react';
 
 import {StyleSheet, Text} from 'react-native';
 import {updateTodoList} from '../redux/operations';
-import {useAppDispatch} from '../../../reducer';
+import {useAppDispatch} from '../../../store';
 import {Card} from 'react-native-paper';
 import {convertDateSinceEpochToDateTime} from '../../../utils/date';
 import {handleApiRequest} from '../../../utils/api';
