@@ -1,0 +1,352 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Todo List API",
+        "description": "API documentation for Todo List App",
+        "contact": {
+            "email": "danielau88@gmail.com"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "https://todo.dlau.one/api/",
+            "description": "Todo List API"
+        }
+    ],
+    "paths": {
+        "/todo_lists/{todo_list_id}/todos": {
+            "get": {
+                "tags": [
+                    "todo"
+                ],
+                "summary": "Returns all todos for a particular todo list",
+                "description": "Returns all todos for a particular todo list",
+                "operationId": "getTodoListTodos",
+                "parameters": [
+                    {
+                        "name": "todo_list_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "todo"
+                ],
+                "summary": "Creates a new todo for given todo list",
+                "description": "Creates a new todo for given todo list",
+                "operationId": "createTodoListTodo",
+                "parameters": [
+                    {
+                        "name": "todo_list_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "new todo to create",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Todo"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        },
+        "/todo_lists/{todo_list_id}/todos/{todo_id}": {
+            "get": {
+                "tags": [
+                    "todo"
+                ],
+                "summary": "Returns the queried todo for the particular todo list",
+                "description": "Returns the queried todo for the particular todo list",
+                "operationId": "getTodoListTodo",
+                "parameters": [
+                    {
+                        "name": "todo_list_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    },
+                    {
+                        "name": "todo_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "todo"
+                ],
+                "summary": "Updates information on existing todos for given todo list",
+                "description": "Updates information on existing todos for given todo list",
+                "operationId": "updateTodoListTodo",
+                "parameters": [
+                    {
+                        "name": "todo_list_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    },
+                    {
+                        "name": "todo_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "todo to update",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Todo"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "todo"
+                ],
+                "summary": "Deletes an existing todo for given todo list",
+                "description": "Deletes an existing todo for given todo list",
+                "operationId": "deleteTodoListTodo",
+                "parameters": [
+                    {
+                        "name": "todo_list_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    },
+                    {
+                        "name": "todo_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        },
+        "/todo_lists": {
+            "get": {
+                "tags": [
+                    "todo_list"
+                ],
+                "summary": "Returns all todo lists",
+                "description": "Returns all todo lists",
+                "operationId": "getTodoLists",
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "todo_list"
+                ],
+                "summary": "Creates new todo list",
+                "description": "Creates new todo list",
+                "operationId": "createTodoList",
+                "requestBody": {
+                    "description": "new todo list to create",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/TodoList"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        },
+        "/todo_lists/{todo_list_id}": {
+            "get": {
+                "tags": [
+                    "todo_list"
+                ],
+                "summary": "Returns the queried todo list",
+                "description": "Returns the queried todo list",
+                "operationId": "getTodoList",
+                "parameters": [
+                    {
+                        "name": "todo_list_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "todo_list"
+                ],
+                "summary": "Updates information on existing todo list",
+                "description": "Updates information on existing todo list",
+                "operationId": "updateTodoList",
+                "parameters": [
+                    {
+                        "name": "todo_list_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "todo list to update",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/TodoList"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "todo_list"
+                ],
+                "summary": "Deletes an existing todo list",
+                "description": "Deletes an existing todo list",
+                "operationId": "deleteTodoList",
+                "parameters": [
+                    {
+                        "name": "todo_list_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Todo": {
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "description": {
+                        "type": "string",
+                        "format": "string"
+                    },
+                    "is_done": {
+                        "type": "boolean",
+                        "format": "string"
+                    },
+                    "todo_list_id": {
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                },
+                "type": "object"
+            },
+            "TodoList": {
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "name": {
+                        "type": "string",
+                        "format": "string"
+                    }
+                },
+                "type": "object"
+            }
+        }
+    }
+}

@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
+/**
+ * @OA\Schema()
+ */
 class TodoList extends Model
 {
     use HasFactory;
@@ -15,4 +18,18 @@ class TodoList extends Model
     {
         return $this->hasMany(Todo::class);
     }
+
+    /**
+     * @OA\Property(format="int32")
+     *
+     * @var int
+     */
+    public $id;
+
+    /**
+     * @OA\Property(format="string")
+     *
+     * @var string
+     */
+    public $name;
 }
