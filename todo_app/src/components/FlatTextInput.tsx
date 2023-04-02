@@ -23,6 +23,7 @@ const FlatTextInput = (props: Props): JSX.Element => {
       value={value}
       multiline={true}
       blurOnSubmit={true}
+      dense={true}
     />
   );
 };
@@ -30,6 +31,7 @@ const FlatTextInput = (props: Props): JSX.Element => {
 const styles = StyleSheet.create({
   input: {
     backgroundColor: 'transparent',
+    paddingHorizontal: 5,
   },
 });
 
