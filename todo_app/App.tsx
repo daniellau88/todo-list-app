@@ -14,12 +14,14 @@ import {
 } from 'react-native-paper';
 import Navigator from './src/navigator';
 import NotificationBar from './src/modules/notifications/components/NotificationBar';
+import OfflineTopBar from './src/modules/app-info/components/OfflineTopBar';
 
 const App = (): JSX.Element => {
   return (
     <StoreProvider store={store}>
       <PaperProvider theme={DefaultTheme}>
         <Provider>
+          <OfflineTopBar />
           <Navigator />
           <NotificationBar />
         </Provider>
