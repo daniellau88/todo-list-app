@@ -9,13 +9,19 @@ import {
   useColorScheme,
 } from 'react-native';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
-import {loadTodoList, loadTodoListTodos} from '../redux/operations';
+import {
+  loadTodoList,
+  loadTodoListTodos,
+  updateTodoList,
+} from '../redux/operations';
 import {useAppDispatch, useAppSelector} from '../../../reducer';
-import {Card, Title} from 'react-native-paper';
+import {Card} from 'react-native-paper';
 import {convertDateSinceEpochToDateTime} from '../../../utils/date';
 import TodoListTodosScrollItems from './TodoListTodosScrollItems';
-import {handleApiRequests} from '../../../utils/api';
+import {handleApiRequest, handleApiRequests} from '../../../utils/api';
 import {getTodoListEntity, getTodoListTodoCollection} from '../redux/selectors';
+import {useIsFocused} from '@react-navigation/native';
+import FlatTextInput from '../../../components/FlatTextInput';
 
 interface Props {
   todoListId: number;
@@ -23,10 +29,12 @@ interface Props {
 
 const TodoListTodosShowView = (props: Props): JSX.Element => {
   const {todoListId} = props;
+  const isFocused = useIsFocused();
 
   const dispatch = useAppDispatch();
   const isDarkMode = useColorScheme() === 'dark';
   const [isRefreshing, setIsRefreshing] = React.useState(false);
+  const [textInput, setTextInput] = React.useState('');
 
   const backgroundStyle = {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
@@ -39,7 +47,24 @@ const TodoListTodosShowView = (props: Props): JSX.Element => {
   React.useEffect(() => {
     handleOnRefresh(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [isFocused]);
+
+  React.useEffect(() => {
+    if (todoList) {
+      setTextInput(todoList.name);
+    }
+  }, [todoList]);
+
+  const onChangeText = (text: string) => {
+    setTextInput(text);
+  };
+
+  const onBlur = () => {
+    handleApiRequest(
+      dispatch,
+      dispatch(updateTodoList({id: todoListId, name: textInput})),
+    );
+  };
 
   const handleOnRefresh = (forceReload: boolean = true) => {
     setIsRefreshing(true);
@@ -69,7 +94,12 @@ const TodoListTodosShowView = (props: Props): JSX.Element => {
         }}>
         <Card>
           <Card.Content>
-            <Title>{todoList.name}</Title>
+            <FlatTextInput
+              value={textInput}
+              onBlur={onBlur}
+              onChangeText={onChangeText}
+              placeholder="Enter name here"
+            />
             <Text style={styles.dateText}>
               Last updated{' '}
               {convertDateSinceEpochToDateTime(

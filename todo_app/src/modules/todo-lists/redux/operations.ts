@@ -12,6 +12,7 @@ import {
   TodoListEntity,
   TodoListResponse,
   TodoListStoreRequest,
+  TodoListUpdateRequest,
   TodoResponse,
 } from '../../../typings/model';
 import {todoListAction} from './reducer';
@@ -61,6 +62,19 @@ export const storeTodoList = (
     return executeOperationEntity(
       () => getState().todoList.todoLists,
       () => todoListApi.store(req),
+      response => dispatch(todoListAction.saveTodoList(response)),
+      () => dispatch(todoListAction.resetTodoListCollection()),
+    );
+  };
+};
+
+export const updateTodoList = (
+  req: TodoListUpdateRequest,
+): ThunkAction<ApiPromise<TodoListEntity>, RootState, undefined, AnyAction> => {
+  return (dispatch, getState) => {
+    return executeOperationEntity(
+      () => getState().todoList.todoLists,
+      () => todoListApi.update(req),
       response => dispatch(todoListAction.saveTodoList(response)),
       () => dispatch(todoListAction.resetTodoListCollection()),
     );

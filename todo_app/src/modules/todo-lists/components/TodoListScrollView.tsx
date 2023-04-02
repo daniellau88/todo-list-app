@@ -26,7 +26,6 @@ const TodoListScrollView = (): JSX.Element => {
   };
 
   React.useEffect(() => {
-    console.log('hi');
     onRefresh(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isFocused]);

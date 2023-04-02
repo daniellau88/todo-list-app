@@ -3,9 +3,10 @@ import React from 'react';
 import {ScrollView, StyleSheet, Text, View, useColorScheme} from 'react-native';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import {useAppDispatch} from '../../../reducer';
-import {Card, TextInput} from 'react-native-paper';
+import {Card} from 'react-native-paper';
 import {handleApiRequest} from '../../../utils/api';
 import {storeTodoList} from '../redux/operations';
+import FlatTextInput from '../../../components/FlatTextInput';
 
 interface Props {
   setTodoListIdStore: (id: number) => void;
@@ -41,12 +42,9 @@ const TodoListTodosCreateView = (props: Props): JSX.Element => {
         }}>
         <Card>
           <Card.Content>
-            <TextInput
+            <FlatTextInput
               onBlur={onBlur}
               onChangeText={onChangeText}
-              underlineColor="transparent"
-              mode="flat"
-              style={styles.input}
               placeholder="Enter name here"
             />
             <Text style={styles.dateText}>New entry</Text>
@@ -65,9 +63,6 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
-  },
-  input: {
-    backgroundColor: 'transparent',
   },
 });
 
