@@ -148,7 +148,15 @@ export const storeTodo = (
     return executeOperationEntity(
       () => getState().todoList.todos,
       () => todoApi.store(todoListId, req),
-      response => dispatch(todoListAction.saveTodo(response)),
+      response => {
+        dispatch(todoListAction.saveTodo(response));
+        dispatch(
+          todoListAction.addToTodoListCollectionSet({
+            todoListId,
+            id: response.id,
+          }),
+        );
+      },
     );
   };
 };

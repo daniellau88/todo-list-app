@@ -114,6 +114,14 @@ const todoListSlice = createSlice({
         action.payload.id,
       );
     },
+    addToTodoListCollectionSet: (
+      state,
+      action: PayloadAction<{todoListId: number; id: number}>,
+    ) => {
+      state.collectionSetTodoListTodos.byId[action.payload.todoListId].ids.push(
+        action.payload.id,
+      );
+    },
   },
 });
 

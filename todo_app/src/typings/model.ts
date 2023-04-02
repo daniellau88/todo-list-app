@@ -41,8 +41,6 @@ export interface TodoListUpdateRequest {
 
 export interface TodoStoreRequest {
   description: string;
-  is_done: boolean;
-  todo_list_id: number;
 }
 
 export interface TodoUpdateRequest {

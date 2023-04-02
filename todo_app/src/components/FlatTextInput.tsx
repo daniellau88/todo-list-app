@@ -29,8 +29,6 @@ const FlatTextInput = (props: Props): JSX.Element => {
 const styles = StyleSheet.create({
   input: {
     backgroundColor: 'transparent',
-    margin: 0,
-    padding: 0,
   },
 });
 
