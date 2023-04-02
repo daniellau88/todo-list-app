@@ -47,5 +47,4 @@ export interface TodoUpdateRequest {
   id: number;
   description: string;
   is_done: boolean;
-  todo_list_id: number;
 }

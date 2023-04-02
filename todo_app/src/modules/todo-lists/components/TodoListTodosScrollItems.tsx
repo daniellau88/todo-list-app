@@ -7,6 +7,7 @@ import {StyleSheet, View} from 'react-native';
 import {handleApiRequest} from '../../../utils/api';
 import {updateTodo} from '../redux/operations';
 import {TodoUpdateRequest} from '../../../typings/model';
+import FlatTextInput from '../../../components/FlatTextInput';
 
 interface Props {
   id: number;
@@ -18,6 +19,13 @@ const TodoListTodosScrollItems = (props: Props): JSX.Element => {
 
   const todo = useAppSelector(getTodoMiniEntity(id));
   const dispatch = useAppDispatch();
+  const [textInput, setTextInput] = React.useState('');
+
+  React.useEffect(() => {
+    if (todo) {
+      setTextInput(todo.description);
+    }
+  }, [todo]);
 
   if (!todo) {
     return <Text>Invalid</Text>;
@@ -31,13 +39,39 @@ const TodoListTodosScrollItems = (props: Props): JSX.Element => {
     handleApiRequest(dispatch, dispatch(updateTodo(todoListId, newTodo)));
   };
 
+  const onChangeText = (text: string) => {
+    setTextInput(text);
+  };
+
+  const onBlur = () => {
+    if (todo && textInput !== todo.description) {
+      handleApiRequest(
+        dispatch,
+        dispatch(
+          updateTodo(todoListId, {
+            id: todo.id,
+            description: textInput,
+            is_done: todo.is_done,
+          }),
+        ),
+      );
+    }
+  };
+
   return (
     <View style={styles.container}>
       <Checkbox
         status={todo.is_done ? 'checked' : 'unchecked'}
         onPress={onCheckboxPress}
       />
-      <Text style={styles.descriptionText}>{todo.description}</Text>
+      <View style={styles.descriptionText}>
+        <FlatTextInput
+          value={textInput}
+          onBlur={onBlur}
+          onChangeText={onChangeText}
+          placeholder="Enter name here"
+        />
+      </View>
     </View>
   );
 };

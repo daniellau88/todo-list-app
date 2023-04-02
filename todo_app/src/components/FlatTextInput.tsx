@@ -22,6 +22,7 @@ const FlatTextInput = (props: Props): JSX.Element => {
       placeholder={placeholder}
       value={value}
       multiline={true}
+      blurOnSubmit={true}
     />
   );
 };
