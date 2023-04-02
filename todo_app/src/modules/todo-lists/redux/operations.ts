@@ -9,11 +9,14 @@ import {
   selectEntity,
 } from '../../../utils/store';
 import {
+  TodoEntity,
   TodoListEntity,
   TodoListResponse,
   TodoListStoreRequest,
   TodoListUpdateRequest,
   TodoResponse,
+  TodoStoreRequest,
+  TodoUpdateRequest,
 } from '../../../typings/model';
 import {todoListAction} from './reducer';
 import {RootState} from '../../../reducer';
@@ -88,7 +91,7 @@ export const deleteTodoList = (
     return executeOperationEntity(
       () => getState().todoList.todoLists,
       () => todoListApi.remove(todoListId),
-      response => dispatch(todoListAction.removeTodoList({id: response.id})),
+      response => dispatch(todoListAction.resetTodoList({id: response.id})),
       () => dispatch(todoListAction.resetTodoListCollection()),
     );
   };
@@ -118,6 +121,60 @@ export const loadTodoListTodos = (
       (responseArray: Array<TodoResponse>) =>
         dispatch(todoListAction.saveTodoArray(responseArray)),
       forceReload,
+    );
+  };
+};
+
+export const loadTodoListTodo = (
+  todoListId: number,
+  id: number,
+  forceReload: boolean = false,
+): ThunkAction<ApiPromise<TodoEntity>, RootState, undefined, AnyAction> => {
+  return (dispatch, getState) => {
+    return queryEntity(
+      () => selectEntity(getState().todoList.todos, id),
+      () => todoApi.show(todoListId, id),
+      (response: TodoResponse) => dispatch(todoListAction.saveTodo(response)),
+      forceReload,
+    );
+  };
+};
+
+export const storeTodo = (
+  todoListId: number,
+  req: TodoStoreRequest,
+): ThunkAction<ApiPromise<TodoEntity>, RootState, undefined, AnyAction> => {
+  return (dispatch, getState) => {
+    return executeOperationEntity(
+      () => getState().todoList.todos,
+      () => todoApi.store(todoListId, req),
+      response => dispatch(todoListAction.saveTodo(response)),
+    );
+  };
+};
+
+export const updateTodo = (
+  todoListId: number,
+  req: TodoUpdateRequest,
+): ThunkAction<ApiPromise<TodoEntity>, RootState, undefined, AnyAction> => {
+  return (dispatch, getState) => {
+    return executeOperationEntity(
+      () => getState().todoList.todos,
+      () => todoApi.update(todoListId, req),
+      response => dispatch(todoListAction.saveTodo(response)),
+    );
+  };
+};
+
+export const deleteTodo = (
+  todoListId: number,
+  id: number,
+): ThunkAction<ApiPromise<TodoEntity>, RootState, undefined, AnyAction> => {
+  return (dispatch, getState) => {
+    return executeOperationEntity(
+      () => getState().todoList.todos,
+      () => todoApi.remove(todoListId, id),
+      response => dispatch(todoListAction.resetTodo({id: response.id})),
     );
   };
 };

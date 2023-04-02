@@ -194,6 +194,13 @@ export const resetEntityCollection = (collection: EntityCollection) => {
   collection.last_update = 0;
 };
 
+export const resetEntityCollectionFromSet = (
+  collectionSet: EntityCollectionSet,
+  id: SelectionKey,
+) => {
+  delete collectionSet.byId[id];
+};
+
 export const resetEntity = <T extends WithId>(
   store: EntityStore<T>,
   id: SelectionKey,

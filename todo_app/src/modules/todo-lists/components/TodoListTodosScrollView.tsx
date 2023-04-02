@@ -107,7 +107,7 @@ const TodoListTodosScrollView = (props: Props): JSX.Element => {
         <Card.Content>
           {todoListTodoIds.length === 0 && <Text>No todos to show</Text>}
           {todoListTodoIds.map(x => (
-            <TodoListTodosScrollItems key={x} id={x} />
+            <TodoListTodosScrollItems key={x} todoListId={todoListId} id={x} />
           ))}
         </Card.Content>
       </Card>

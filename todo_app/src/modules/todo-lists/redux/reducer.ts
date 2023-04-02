@@ -6,12 +6,14 @@ import {
   createEntityStore,
   resetEntity,
   resetEntityCollection,
+  resetEntityCollectionFromSet,
   saveEntityArrayToStore,
   saveEntityToStore,
   saveInfoToCollection,
   saveInfoToCollectionSet,
 } from '../../../utils/store';
 import {
+  TodoEntity,
   TodoListEntity,
   TodoListResponse,
   TodoResponse,
@@ -56,7 +58,7 @@ const todoListSlice = createSlice({
         entity,
       );
     },
-    removeTodoList: (state, action: PayloadAction<{id: number}>) => {
+    resetTodoList: (state, action: PayloadAction<{id: number}>) => {
       const todoListId = action.payload.id;
       resetEntity(state.todoLists, todoListId);
     },
@@ -80,6 +82,19 @@ const todoListSlice = createSlice({
       });
       saveEntityArrayToStore(state.todos, data, false);
     },
+    saveTodo: (state, action: PayloadAction<TodoResponse>) => {
+      const data = action.payload;
+      const entity: TodoEntity = {
+        ...data,
+        created_at: convertDateStringToDateSinceEpoch(data.created_at),
+        updated_at: convertDateStringToDateSinceEpoch(data.updated_at),
+      };
+      saveEntityToStore<TodoEntity, TodoEntity>(state.todos, entity);
+    },
+    resetTodo: (state, action: PayloadAction<{id: number}>) => {
+      const todoId = action.payload.id;
+      resetEntity(state.todos, todoId);
+    },
     updateTodoListTodoCollectionSet: (
       state,
       action: PayloadAction<{id: number; info: CollectionInfo}>,
@@ -88,6 +103,15 @@ const todoListSlice = createSlice({
         state.collectionSetTodoListTodos,
         action.payload.id,
         action.payload.info,
+      );
+    },
+    resetTodoListCollectionSet: (
+      state,
+      action: PayloadAction<{id: number}>,
+    ) => {
+      resetEntityCollectionFromSet(
+        state.collectionSetTodoListTodos,
+        action.payload.id,
       );
     },
   },
