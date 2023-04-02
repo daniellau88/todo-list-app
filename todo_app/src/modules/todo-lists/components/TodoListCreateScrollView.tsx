@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {ScrollView, StyleSheet, Text, View, useColorScheme} from 'react-native';
+import {ScrollView, StyleSheet, Text, useColorScheme} from 'react-native';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import {useAppDispatch} from '../../../reducer';
 import {Card} from 'react-native-paper';
@@ -14,10 +14,6 @@ const TodoListCreateScrollView = (): JSX.Element => {
   const navigation = useAppNavigation();
   const isDarkMode = useColorScheme() === 'dark';
   const [textInput, setTextInput] = React.useState('');
-
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
 
   const onChangeText = (text: string) => {
     setTextInput(text);
