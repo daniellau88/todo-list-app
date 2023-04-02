@@ -81,6 +81,19 @@ export const updateTodoList = (
   };
 };
 
+export const deleteTodoList = (
+  todoListId: number,
+): ThunkAction<ApiPromise<TodoListEntity>, RootState, undefined, AnyAction> => {
+  return (dispatch, getState) => {
+    return executeOperationEntity(
+      () => getState().todoList.todoLists,
+      () => todoListApi.remove(todoListId),
+      response => dispatch(todoListAction.removeTodoList({id: response.id})),
+      () => dispatch(todoListAction.resetTodoListCollection()),
+    );
+  };
+};
+
 export const loadTodoListTodos = (
   todoListId: number,
   forceReload: boolean = false,

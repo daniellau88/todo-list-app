@@ -7,14 +7,11 @@ import {Card} from 'react-native-paper';
 import {handleApiRequest} from '../../../utils/api';
 import {storeTodoList} from '../redux/operations';
 import FlatTextInput from '../../../components/FlatTextInput';
+import {ScreenName, useAppNavigation} from '../../../navigation';
 
-interface Props {
-  setTodoListIdStore: (id: number) => void;
-}
-
-const TodoListTodosCreateView = (props: Props): JSX.Element => {
-  const {setTodoListIdStore} = props;
+const TodoListCreateScrollView = (): JSX.Element => {
   const dispatch = useAppDispatch();
+  const navigation = useAppNavigation();
   const isDarkMode = useColorScheme() === 'dark';
   const [textInput, setTextInput] = React.useState('');
 
@@ -28,7 +25,10 @@ const TodoListTodosCreateView = (props: Props): JSX.Element => {
 
   const onBlur = () => {
     handleApiRequest(dispatch, dispatch(storeTodoList({name: textInput}))).then(
-      x => setTodoListIdStore(x.payload.id),
+      x =>
+        navigation.replace(ScreenName.TodoListTodos, {
+          todoListId: x.payload.id,
+        }),
     );
   };
 
@@ -66,4 +66,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default TodoListTodosCreateView;
+export default TodoListCreateScrollView;

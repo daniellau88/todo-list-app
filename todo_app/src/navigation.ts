@@ -4,11 +4,13 @@ import {NativeStackScreenProps} from '@react-navigation/native-stack';
 export enum ScreenName {
   TodoList = 'TodoList',
   TodoListTodos = 'TodoListTodos',
+  TodoListCreate = 'TodoListCreate',
 }
 
 type RootStackParamList = {
   [ScreenName.TodoList]: undefined;
-  [ScreenName.TodoListTodos]: {todoListId?: number; isCreate: boolean};
+  [ScreenName.TodoListCreate]: undefined;
+  [ScreenName.TodoListTodos]: {todoListId: number};
 };
 
 type Props = NativeStackScreenProps<RootStackParamList, ScreenName>;

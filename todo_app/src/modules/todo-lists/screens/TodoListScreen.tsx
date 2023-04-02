@@ -1,7 +1,7 @@
 import React from 'react';
-import TodoListScrollView from './TodoListScrollView';
+import TodoListScrollView from '../components/TodoListScrollView';
 import {View} from 'react-native';
-import TodoListCreateButton from './TodoListCreateButton';
+import TodoListCreateButton from '../components/TodoListCreateButton';
 
 const TodoListScreen = (): JSX.Element => {
   return (

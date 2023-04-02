@@ -22,10 +22,7 @@ const TodoListScrollItems = (props: Props): JSX.Element => {
   }
 
   const handleOnPress = () => {
-    navigation.navigate(ScreenName.TodoListTodos, {
-      todoListId: id,
-      isCreate: false,
-    });
+    navigation.navigate(ScreenName.TodoListTodos, {todoListId: id});
   };
 
   return (

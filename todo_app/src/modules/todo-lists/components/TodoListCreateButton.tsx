@@ -5,7 +5,7 @@ import {ScreenName, useAppNavigation} from '../../../navigation';
 const TodoListCreateButton = (): JSX.Element => {
   const navigation = useAppNavigation();
   const onPressCreate = () => {
-    navigation.navigate(ScreenName.TodoListTodos, {isCreate: true});
+    navigation.navigate(ScreenName.TodoListCreate);
   };
 
   return <FloatingButton onPress={onPressCreate} />;

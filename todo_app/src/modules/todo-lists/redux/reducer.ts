@@ -4,6 +4,7 @@ import {
   createEntityCollection,
   createEntityCollectionSet,
   createEntityStore,
+  resetEntity,
   resetEntityCollection,
   saveEntityArrayToStore,
   saveEntityToStore,
@@ -54,6 +55,10 @@ const todoListSlice = createSlice({
         state.todoLists,
         entity,
       );
+    },
+    removeTodoList: (state, action: PayloadAction<{id: number}>) => {
+      const todoListId = action.payload.id;
+      resetEntity(state.todoLists, todoListId);
     },
     updateTodoListCollection: (
       state,

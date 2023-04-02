@@ -193,3 +193,10 @@ export const resetEntityCollection = (collection: EntityCollection) => {
   collection.ids = [];
   collection.last_update = 0;
 };
+
+export const resetEntity = <T extends WithId>(
+  store: EntityStore<T>,
+  id: SelectionKey,
+) => {
+  delete store.byId[id];
+};
