@@ -3,7 +3,7 @@ import {TextInput} from 'react-native-paper';
 import {StyleSheet} from 'react-native';
 
 interface Props {
-  onBlur?: () => void;
+  onBlur?: (text: string) => void;
   onChangeText?: (text: string) => void;
   placeholder?: string;
   value?: string;
@@ -12,15 +12,36 @@ interface Props {
 const FlatTextInput = (props: Props): JSX.Element => {
   const {onBlur, onChangeText, placeholder, value} = props;
 
+  const [textInput, setTextInput] = React.useState('');
+
+  React.useEffect(() => {
+    if (value !== undefined && value !== textInput) {
+      setTextInput(value);
+    }
+  }, [value]);
+
+  const handleOnChangeText = (text: string) => {
+    setTextInput(text);
+    if (onChangeText) {
+      onChangeText(text);
+    }
+  };
+
+  const handleOnBlur = () => {
+    if (onBlur) {
+      onBlur(textInput);
+    }
+  };
+
   return (
     <TextInput
-      onBlur={onBlur}
-      onChangeText={onChangeText}
+      onBlur={handleOnBlur}
+      onChangeText={handleOnChangeText}
       underlineColor="transparent"
       mode="flat"
       style={styles.input}
       placeholder={placeholder}
-      value={value}
+      value={textInput}
       multiline={true}
       blurOnSubmit={true}
       dense={true}

@@ -17,23 +17,12 @@ const TodoListTodosScrollViewTodoDetails = (props: Props): JSX.Element => {
   const {todoList} = props;
 
   const dispatch = useAppDispatch();
-  const [textInput, setTextInput] = React.useState('');
 
-  React.useEffect(() => {
-    if (todoList) {
-      setTextInput(todoList.name);
-    }
-  }, [todoList]);
-
-  const onChangeText = (text: string) => {
-    setTextInput(text);
-  };
-
-  const onBlur = () => {
-    if (todoList && textInput !== todoList.name) {
+  const onBlur = (text: string) => {
+    if (todoList && text !== todoList.name) {
       handleApiRequest(
         dispatch,
-        dispatch(updateTodoList({id: todoList.id, name: textInput})),
+        dispatch(updateTodoList({id: todoList.id, name: text})),
       );
     }
   };
@@ -42,9 +31,8 @@ const TodoListTodosScrollViewTodoDetails = (props: Props): JSX.Element => {
     <Card>
       <Card.Content>
         <FlatTextInput
-          value={textInput}
+          value={todoList.name}
           onBlur={onBlur}
-          onChangeText={onChangeText}
           placeholder="Enter name here"
         />
         <Text style={styles.dateText}>

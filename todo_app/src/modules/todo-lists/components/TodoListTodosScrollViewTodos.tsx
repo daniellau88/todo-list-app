@@ -16,19 +16,17 @@ const TodoListTodosScrollViewTodos = (props: Props): JSX.Element => {
   const {todoListTodoIds, todoListId} = props;
 
   const dispatch = useAppDispatch();
-  const [textInput, setTextInput] = React.useState('');
 
-  const onChangeText = (text: string) => {
-    setTextInput(text);
-  };
+  const [textValue, setTextValue] = React.useState('');
 
-  const onBlur = () => {
-    if (textInput !== '') {
+  const onBlur = (text: string) => {
+    if (text !== '') {
+      setTextValue(text);
       handleApiRequest(
         dispatch,
-        dispatch(storeTodo(todoListId, {description: textInput})),
+        dispatch(storeTodo(todoListId, {description: text})),
       ).then(() => {
-        setTextInput('');
+        setTextValue('');
       });
     }
   };
@@ -43,9 +41,8 @@ const TodoListTodosScrollViewTodos = (props: Props): JSX.Element => {
           <Button icon="plus" children={undefined} />
           <View style={styles.descriptionText}>
             <FlatTextInput
-              value={textInput}
+              value={textValue}
               onBlur={onBlur}
-              onChangeText={onChangeText}
               placeholder="Add new todo"
             />
           </View>

@@ -13,14 +13,9 @@ const TodoListCreateScrollView = (): JSX.Element => {
   const dispatch = useAppDispatch();
   const navigation = useAppNavigation();
   const isDarkMode = useColorScheme() === 'dark';
-  const [textInput, setTextInput] = React.useState('');
 
-  const onChangeText = (text: string) => {
-    setTextInput(text);
-  };
-
-  const onBlur = () => {
-    handleApiRequest(dispatch, dispatch(storeTodoList({name: textInput}))).then(
+  const onBlur = (text: string) => {
+    handleApiRequest(dispatch, dispatch(storeTodoList({name: text}))).then(
       resp =>
         navigation.replace(ScreenName.TodoListTodos, {
           todoListId: resp.payload.id,
@@ -36,11 +31,7 @@ const TodoListCreateScrollView = (): JSX.Element => {
       ]}>
       <Card>
         <Card.Content>
-          <FlatTextInput
-            onBlur={onBlur}
-            onChangeText={onChangeText}
-            placeholder="Enter name here"
-          />
+          <FlatTextInput onBlur={onBlur} placeholder="Enter name here" />
           <Text style={styles.dateText}>New entry</Text>
         </Card.Content>
       </Card>

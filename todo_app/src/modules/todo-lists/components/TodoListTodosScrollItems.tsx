@@ -19,13 +19,6 @@ const TodoListTodosScrollItems = (props: Props): JSX.Element => {
 
   const todo = useAppSelector(getTodoMiniEntity(id));
   const dispatch = useAppDispatch();
-  const [textInput, setTextInput] = React.useState('');
-
-  React.useEffect(() => {
-    if (todo) {
-      setTextInput(todo.description);
-    }
-  }, [todo]);
 
   if (!todo) {
     return <Text>Invalid</Text>;
@@ -39,18 +32,14 @@ const TodoListTodosScrollItems = (props: Props): JSX.Element => {
     handleApiRequest(dispatch, dispatch(updateTodo(todoListId, newTodo)));
   };
 
-  const onChangeText = (text: string) => {
-    setTextInput(text);
-  };
-
-  const onBlur = () => {
-    if (todo && textInput !== todo.description) {
+  const onBlur = (text: string) => {
+    if (todo && text !== todo.description) {
       handleApiRequest(
         dispatch,
         dispatch(
           updateTodo(todoListId, {
             id: todo.id,
-            description: textInput,
+            description: text,
             is_done: todo.is_done,
           }),
         ),
@@ -66,9 +55,8 @@ const TodoListTodosScrollItems = (props: Props): JSX.Element => {
       />
       <View style={styles.descriptionText}>
         <FlatTextInput
-          value={textInput}
+          value={todo.description}
           onBlur={onBlur}
-          onChangeText={onChangeText}
           placeholder="Enter name here"
         />
       </View>
