@@ -34,23 +34,20 @@ const TodoListCreateScrollView = (): JSX.Element => {
 
   return (
     <ScrollView
-      contentInsetAdjustmentBehavior="automatic"
-      style={backgroundStyle}>
-      <View
-        style={{
-          backgroundColor: isDarkMode ? Colors.black : Colors.white,
-        }}>
-        <Card>
-          <Card.Content>
-            <FlatTextInput
-              onBlur={onBlur}
-              onChangeText={onChangeText}
-              placeholder="Enter name here"
-            />
-            <Text style={styles.dateText}>New entry</Text>
-          </Card.Content>
-        </Card>
-      </View>
+      style={[
+        {backgroundColor: isDarkMode ? Colors.black : Colors.white},
+        styles.scrollContainer,
+      ]}>
+      <Card>
+        <Card.Content>
+          <FlatTextInput
+            onBlur={onBlur}
+            onChangeText={onChangeText}
+            placeholder="Enter name here"
+          />
+          <Text style={styles.dateText}>New entry</Text>
+        </Card.Content>
+      </Card>
     </ScrollView>
   );
 };
@@ -59,10 +56,8 @@ const styles = StyleSheet.create({
   dateText: {
     textAlign: 'right',
   },
-  container: {
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
+  scrollContainer: {
+    height: '100%',
   },
 });
 

@@ -84,35 +84,28 @@ const TodoListTodosScrollView = (props: Props): JSX.Element => {
   return (
     <ScrollView
       contentInsetAdjustmentBehavior="automatic"
-      style={backgroundStyle}
+      style={[backgroundStyle, styles.scrollContainer]}
       refreshControl={
         <RefreshControl refreshing={isRefreshing} onRefresh={handleOnRefresh} />
       }>
-      <View
-        style={{
-          backgroundColor: isDarkMode ? Colors.black : Colors.white,
-        }}>
-        <Card>
-          <Card.Content>
-            <FlatTextInput
-              value={textInput}
-              onBlur={onBlur}
-              onChangeText={onChangeText}
-              placeholder="Enter name here"
-            />
-            <Text style={styles.dateText}>
-              Last updated{' '}
-              {convertDateSinceEpochToDateTime(
-                todoList.updated_at,
-              ).toRelative()}
-            </Text>
-          </Card.Content>
-        </Card>
-        {todoListTodoIds.length === 0 && <Text>No todos to show</Text>}
-        {todoListTodoIds.map(x => (
-          <TodoListTodosScrollItems key={x} id={x} />
-        ))}
-      </View>
+      <Card>
+        <Card.Content>
+          <FlatTextInput
+            value={textInput}
+            onBlur={onBlur}
+            onChangeText={onChangeText}
+            placeholder="Enter name here"
+          />
+          <Text style={styles.dateText}>
+            Last updated{' '}
+            {convertDateSinceEpochToDateTime(todoList.updated_at).toRelative()}
+          </Text>
+        </Card.Content>
+      </Card>
+      {todoListTodoIds.length === 0 && <Text>No todos to show</Text>}
+      {todoListTodoIds.map(x => (
+        <TodoListTodosScrollItems key={x} id={x} />
+      ))}
     </ScrollView>
   );
 };
@@ -121,10 +114,8 @@ const styles = StyleSheet.create({
   dateText: {
     textAlign: 'right',
   },
-  container: {
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
+  scrollContainer: {
+    height: '100%',
   },
 });
 

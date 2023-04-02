@@ -3,6 +3,7 @@ import React from 'react';
 import {
   RefreshControl,
   ScrollView,
+  StyleSheet,
   Text,
   View,
   useColorScheme,
@@ -44,21 +45,22 @@ const TodoListScrollView = (): JSX.Element => {
   return (
     <ScrollView
       contentInsetAdjustmentBehavior="automatic"
-      style={backgroundStyle}
+      style={[backgroundStyle, styles.scrollContainer]}
       refreshControl={
         <RefreshControl refreshing={isRefreshing} onRefresh={onRefresh} />
       }>
-      <View
-        style={{
-          backgroundColor: isDarkMode ? Colors.black : Colors.white,
-        }}>
-        {todoIds.length === 0 && <Text>No todos to show</Text>}
-        {todoIds.map(x => (
-          <TodoListScrollItems key={x} id={x} />
-        ))}
-      </View>
+      {todoIds.length === 0 && <Text>No todos to show</Text>}
+      {todoIds.map(x => (
+        <TodoListScrollItems key={x} id={x} />
+      ))}
     </ScrollView>
   );
 };
+
+const styles = StyleSheet.create({
+  scrollContainer: {
+    height: '100%',
+  },
+});
 
 export default TodoListScrollView;
