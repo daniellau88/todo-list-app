@@ -2,7 +2,7 @@ import React from 'react';
 
 import {useAppSelector} from '../../../reducer';
 import {getTodoMiniEntity} from '../redux/selectors';
-import {Card, Checkbox, Text} from 'react-native-paper';
+import {Checkbox, Text} from 'react-native-paper';
 import {StyleSheet, View} from 'react-native';
 
 interface Props {
@@ -21,7 +21,7 @@ const TodoListTodosScrollItems = (props: Props): JSX.Element => {
   return (
     <View style={styles.container}>
       <Checkbox status={todo.is_done ? 'checked' : 'unchecked'} />
-      <Text>{todo.description}</Text>
+      <Text style={styles.descriptionText}>{todo.description}</Text>
     </View>
   );
 };
@@ -32,6 +32,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     margin: 5,
+  },
+  descriptionText: {
+    flex: 1,
   },
 });
 
