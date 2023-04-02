@@ -4,7 +4,6 @@ import {
   RefreshControl,
   ScrollView,
   StyleSheet,
-  Text,
   useColorScheme,
 } from 'react-native';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
@@ -14,6 +13,7 @@ import {getTodoListCollection} from '../redux/selectors';
 import TodoListScrollItems from './TodoListScrollItems';
 import {handleApiRequests} from '../../../utils/api';
 import {useIsFocused} from '@react-navigation/native';
+import {Text} from 'react-native-paper';
 
 const TodoListScrollView = (): JSX.Element => {
   const isFocused = useIsFocused();
@@ -48,7 +48,9 @@ const TodoListScrollView = (): JSX.Element => {
       refreshControl={
         <RefreshControl refreshing={isRefreshing} onRefresh={onRefresh} />
       }>
-      {todoIds.length === 0 && <Text>No todos to show</Text>}
+      {todoIds.length === 0 && (
+        <Text variant="bodyMedium">No todos to show</Text>
+      )}
       {todoIds.map(x => (
         <TodoListScrollItems key={x} id={x} />
       ))}

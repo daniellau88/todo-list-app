@@ -59,10 +59,12 @@ const TodoListTodosScrollView = (props: Props): JSX.Element => {
   };
 
   const onBlur = () => {
-    handleApiRequest(
-      dispatch,
-      dispatch(updateTodoList({id: todoListId, name: textInput})),
-    );
+    if (todoList && textInput !== todoList.name) {
+      handleApiRequest(
+        dispatch,
+        dispatch(updateTodoList({id: todoListId, name: textInput})),
+      );
+    }
   };
 
   const handleOnRefresh = (forceReload: boolean = true) => {
@@ -101,10 +103,14 @@ const TodoListTodosScrollView = (props: Props): JSX.Element => {
           </Text>
         </Card.Content>
       </Card>
-      {todoListTodoIds.length === 0 && <Text>No todos to show</Text>}
-      {todoListTodoIds.map(x => (
-        <TodoListTodosScrollItems key={x} id={x} />
-      ))}
+      <Card>
+        <Card.Content>
+          {todoListTodoIds.length === 0 && <Text>No todos to show</Text>}
+          {todoListTodoIds.map(x => (
+            <TodoListTodosScrollItems key={x} id={x} />
+          ))}
+        </Card.Content>
+      </Card>
     </ScrollView>
   );
 };

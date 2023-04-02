@@ -21,9 +21,9 @@ const TodoListCreateScrollView = (): JSX.Element => {
 
   const onBlur = () => {
     handleApiRequest(dispatch, dispatch(storeTodoList({name: textInput}))).then(
-      x =>
+      resp =>
         navigation.replace(ScreenName.TodoListTodos, {
-          todoListId: x.payload.id,
+          todoListId: resp.payload.id,
         }),
     );
   };

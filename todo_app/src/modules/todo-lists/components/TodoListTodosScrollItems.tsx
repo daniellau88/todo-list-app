@@ -19,12 +19,10 @@ const TodoListTodosScrollItems = (props: Props): JSX.Element => {
   }
 
   return (
-    <Card>
-      <View style={styles.container}>
-        <Checkbox status={todo.is_done ? 'checked' : 'unchecked'} />
-        <Text>{todo.description}</Text>
-      </View>
-    </Card>
+    <View style={styles.container}>
+      <Checkbox status={todo.is_done ? 'checked' : 'unchecked'} />
+      <Text>{todo.description}</Text>
+    </View>
   );
 };
 
