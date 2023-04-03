@@ -16,7 +16,6 @@ export const handleApiRequest = <T>(
 ): ApiPromise<T> => {
   return request
     .then(x => {
-      dispatch(setIsOnline(true));
       if (x.messages.length > 0) {
         dispatch(
           enqueueNotification(
@@ -29,13 +28,10 @@ export const handleApiRequest = <T>(
       return x;
     })
     .catch(x => {
-      if (x.toJSON().message === 'Network Error') {
-        dispatch(setIsOnline(false));
-      }
       return {
         messages: [],
         payload: {} as T,
-        status: ApiResponseStatus.NoConnection,
+        status: ApiResponseStatus.ConnectionError,
       };
     });
 };

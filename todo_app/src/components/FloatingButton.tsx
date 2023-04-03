@@ -19,6 +19,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: 'rgba(0,0,0,0.2)',
     alignItems: 'center',
+    alignContent: 'center',
     justifyContent: 'center',
     width: 70,
     position: 'absolute',

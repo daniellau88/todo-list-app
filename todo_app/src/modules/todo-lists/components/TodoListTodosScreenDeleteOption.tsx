@@ -3,10 +3,18 @@ import {ScreenName, useAppNavigation, useAppRoute} from '../../../navigation';
 import {useSelector} from 'react-redux';
 import {getTodoListEntity} from '../redux/selectors';
 import {View} from 'react-native';
-import {Button, Dialog, IconButton, Portal, Text} from 'react-native-paper';
+import {
+  Button,
+  Dialog,
+  IconButton,
+  MD3Colors,
+  Portal,
+  Text,
+} from 'react-native-paper';
 import {handleApiRequest} from '../../../utils/api';
 import {deleteTodoList} from '../redux/operations';
 import {useAppDispatch} from '../../../store';
+import {useIsOnline} from '../../../utils/app-info';
 
 const TodoListTodosScreenDeleteOption = (): JSX.Element => {
   const route = useAppRoute<ScreenName.TodoListTodos>();
@@ -16,6 +24,7 @@ const TodoListTodosScreenDeleteOption = (): JSX.Element => {
 
   const todoListId = route.params.todoListId;
   const todoList = useSelector(getTodoListEntity(todoListId));
+  const isOnline = useIsOnline();
 
   if (!todoList) {
     return <View />;
@@ -39,7 +48,12 @@ const TodoListTodosScreenDeleteOption = (): JSX.Element => {
 
   return (
     <View>
-      <IconButton icon="delete" onPress={onPress} />
+      <IconButton
+        icon="delete"
+        onPress={onPress}
+        iconColor={MD3Colors.error50}
+        disabled={!isOnline}
+      />
       <Portal>
         <Dialog visible={showDialog} onDismiss={hideDialog}>
           <Dialog.Title>Alert</Dialog.Title>

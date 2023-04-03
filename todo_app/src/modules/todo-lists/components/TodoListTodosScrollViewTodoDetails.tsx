@@ -8,6 +8,7 @@ import {convertDateSinceEpochToDateTime} from '../../../utils/date';
 import {handleApiRequest} from '../../../utils/api';
 import FlatTextInput from '../../../components/FlatTextInput';
 import {TodoListEntity} from '../../../typings/model';
+import {useIsOnline} from '../../../utils/app-info';
 
 interface Props {
   todoList: TodoListEntity;
@@ -15,6 +16,7 @@ interface Props {
 
 const TodoListTodosScrollViewTodoDetails = (props: Props): JSX.Element => {
   const {todoList} = props;
+  const isOnline = useIsOnline();
 
   const dispatch = useAppDispatch();
 
@@ -34,6 +36,7 @@ const TodoListTodosScrollViewTodoDetails = (props: Props): JSX.Element => {
           value={todoList.name}
           onBlur={onBlur}
           placeholder="Enter name here"
+          editable={isOnline}
         />
         <Text style={styles.dateText}>
           Last updated{' '}

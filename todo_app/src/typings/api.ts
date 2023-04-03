@@ -1,6 +1,6 @@
 export enum ApiResponseStatus {
   Success = 0,
-  NoConnection = 100,
+  ConnectionError = 100,
 }
 
 export interface ApiResponse<T> {

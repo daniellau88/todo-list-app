@@ -8,6 +8,7 @@ import {handleApiRequest} from '../../../utils/api';
 import {updateTodo} from '../redux/operations';
 import {TodoUpdateRequest} from '../../../typings/model';
 import FlatTextInput from '../../../components/FlatTextInput';
+import {useIsOnline} from '../../../utils/app-info';
 
 interface Props {
   id: number;
@@ -19,6 +20,7 @@ const TodoListTodosScrollItems = (props: Props): JSX.Element => {
 
   const todo = useAppSelector(getTodoMiniEntity(id));
   const dispatch = useAppDispatch();
+  const isOnline = useIsOnline();
 
   if (!todo) {
     return <Text>Invalid</Text>;
@@ -51,6 +53,7 @@ const TodoListTodosScrollItems = (props: Props): JSX.Element => {
     <View style={styles.container}>
       <Checkbox
         status={todo.is_done ? 'checked' : 'unchecked'}
+        disabled={!isOnline}
         onPress={onCheckboxPress}
       />
       <View style={styles.descriptionText}>
@@ -58,6 +61,7 @@ const TodoListTodosScrollItems = (props: Props): JSX.Element => {
           value={todo.description}
           onBlur={onBlur}
           placeholder="Enter name here"
+          editable={isOnline}
         />
       </View>
     </View>

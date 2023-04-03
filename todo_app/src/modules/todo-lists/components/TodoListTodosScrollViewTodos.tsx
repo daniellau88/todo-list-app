@@ -6,6 +6,7 @@ import {handleApiRequest} from '../../../utils/api';
 import FlatTextInput from '../../../components/FlatTextInput';
 import TodoListTodosScrollItems from './TodoListTodosScrollItems';
 import {StyleSheet, View} from 'react-native';
+import {useIsOnline} from '../../../utils/app-info';
 
 interface Props {
   todoListTodoIds: Array<number>;
@@ -16,6 +17,7 @@ const TodoListTodosScrollViewTodos = (props: Props): JSX.Element => {
   const {todoListTodoIds, todoListId} = props;
 
   const dispatch = useAppDispatch();
+  const isOnline = useIsOnline();
 
   const [textValue, setTextValue] = React.useState('');
 
@@ -43,7 +45,12 @@ const TodoListTodosScrollViewTodos = (props: Props): JSX.Element => {
             <FlatTextInput
               value={textValue}
               onBlur={onBlur}
-              placeholder="Add new todo"
+              placeholder={
+                isOnline
+                  ? 'Add new todo'
+                  : 'Cannot create todo list when offline'
+              }
+              editable={isOnline}
             />
           </View>
         </View>

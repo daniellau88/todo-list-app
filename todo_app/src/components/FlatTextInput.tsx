@@ -7,10 +7,11 @@ interface Props {
   onChangeText?: (text: string) => void;
   placeholder?: string;
   value?: string;
+  editable?: boolean;
 }
 
 const FlatTextInput = (props: Props): JSX.Element => {
-  const {onBlur, onChangeText, placeholder, value} = props;
+  const {onBlur, onChangeText, placeholder, value, editable} = props;
 
   const [textInput, setTextInput] = React.useState('');
 
@@ -45,6 +46,7 @@ const FlatTextInput = (props: Props): JSX.Element => {
       multiline={true}
       blurOnSubmit={true}
       dense={true}
+      editable={editable}
     />
   );
 };

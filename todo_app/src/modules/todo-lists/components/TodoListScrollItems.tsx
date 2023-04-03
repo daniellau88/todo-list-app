@@ -21,6 +21,10 @@ const TodoListScrollItems = (props: Props): JSX.Element => {
     return <Text>Invalid</Text>;
   }
 
+  const lastUpdatedInfo = `Last updated ${convertDateSinceEpochToDateTime(
+    todoList.updated_at,
+  ).toRelative()}`;
+
   const handleOnPress = () => {
     navigation.navigate(ScreenName.TodoListTodos, {todoListId: id});
   };
@@ -31,10 +35,7 @@ const TodoListScrollItems = (props: Props): JSX.Element => {
         <Title>{todoList.name}</Title>
         <Paragraph>TODO: Summary</Paragraph>
         <View>
-          <Text style={styles.dateText}>
-            Last updated{' '}
-            {convertDateSinceEpochToDateTime(todoList.updated_at).toRelative()}
-          </Text>
+          <Text style={styles.dateText}>{lastUpdatedInfo}</Text>
         </View>
       </Card.Content>
     </Card>

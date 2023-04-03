@@ -1,9 +1,10 @@
 import React from 'react';
 
 import {
+  FlatList,
   RefreshControl,
-  ScrollView,
   StyleSheet,
+  View,
   useColorScheme,
 } from 'react-native';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
@@ -13,7 +14,7 @@ import {getTodoListCollection} from '../redux/selectors';
 import TodoListScrollItems from './TodoListScrollItems';
 import {handleApiRequests} from '../../../utils/api';
 import {useIsFocused} from '@react-navigation/native';
-import {Text} from 'react-native-paper';
+import OfflineTopBar from '../../app-info/components/OfflineTopBar';
 
 const TodoListScrollView = (): JSX.Element => {
   const isFocused = useIsFocused();
@@ -39,29 +40,27 @@ const TodoListScrollView = (): JSX.Element => {
     );
   };
 
-  const todoIds = useAppSelector(getTodoListCollection()).ids;
+  const todoListCollection = useAppSelector(getTodoListCollection());
+  const todoIds = todoListCollection.ids;
+  const lastRetrievedDate = todoListCollection.last_update;
 
   return (
-    <ScrollView
-      contentInsetAdjustmentBehavior="automatic"
-      style={[backgroundStyle, styles.scrollContainer]}
-      refreshControl={
-        <RefreshControl refreshing={isRefreshing} onRefresh={onRefresh} />
-      }>
-      {todoIds.length === 0 && (
-        <Text variant="bodyMedium">No todos to show</Text>
-      )}
-      {todoIds.map(x => (
-        <TodoListScrollItems key={x} id={x} />
-      ))}
-    </ScrollView>
+    <View style={styles.container}>
+      <OfflineTopBar lastRetrievedDate={lastRetrievedDate} />
+      <FlatList
+        data={todoIds}
+        renderItem={id => <TodoListScrollItems id={id.item} />}
+        style={[backgroundStyle]}
+        refreshControl={
+          <RefreshControl refreshing={isRefreshing} onRefresh={onRefresh} />
+        }
+      />
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
-  scrollContainer: {
-    height: '100%',
-  },
+  container: {flex: 1},
 });
 
 export default TodoListScrollView;
