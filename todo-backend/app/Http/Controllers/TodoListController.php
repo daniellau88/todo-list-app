@@ -28,7 +28,7 @@ class TodoListController extends Controller
      */
     public function index()
     {
-        return format_json_response(['items' => TodoList::orderBy('id', 'desc')->get()]);
+        return format_json_response(['items' => TodoList::withCount('todos')->orderBy('id', 'desc')->get()]);
     }
  
     /**
@@ -62,7 +62,7 @@ class TodoListController extends Controller
      */
     public function show($id)
     {
-        $todo_list = TodoList::find($id);
+        $todo_list = TodoList::withCount('todos')->find($id);
         if (is_null($todo_list)) return format_json_response((object)[], ['Cannot find todolist'], ResponseStatus::NotFound);
         return format_json_response($todo_list);
     }
@@ -93,6 +93,7 @@ class TodoListController extends Controller
     public function store(Request $request)
     {
         $todo_list = TodoList::create($request->all());
+        $todo_list['todos_count'] = 0;
 
         return format_json_response($todo_list, ['Todolist added']);
     }
@@ -132,7 +133,7 @@ class TodoListController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $todo_list = TodoList::find($id);
+        $todo_list = TodoList::withCount('todos')->find($id);
         if (is_null($todo_list)) return format_json_response((object)[], ['Cannot find todolist'], ResponseStatus::NotFound);
         $todo_list->update($request->all());
 
@@ -170,7 +171,7 @@ class TodoListController extends Controller
      */
     public function delete(Request $request, $id)
     {
-        $todo_list = TodoList::find($id);
+        $todo_list = TodoList::withCount('todos')->find($id);
         if (is_null($todo_list)) return format_json_response((object)[], ['Cannot find todolist'], ResponseStatus::NotFound);
 
         foreach ($todo_list->todos() as $todo) {
