@@ -49,8 +49,13 @@ const TodoListScrollView = (): JSX.Element => {
     <View style={styles.container}>
       <OfflineTopBar lastRetrievedDate={lastRetrievedDate} />
       {lastRetrievedDate === 0 && (
-        <Text variant="bodyLarge" style={styles.offlineText}>
+        <Text variant="bodyLarge" style={styles.notifyText}>
           No offline todo lists available
+        </Text>
+      )}
+      {todoIds.length === 0 && !isRefreshing && lastRetrievedDate !== 0 && (
+        <Text variant="bodyLarge" style={styles.notifyText}>
+          No todo lists to show
         </Text>
       )}
       <FlatList
@@ -69,7 +74,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  offlineText: {
+  notifyText: {
+    margin: 10,
     textAlign: 'center',
     justifyContent: 'center',
   },
