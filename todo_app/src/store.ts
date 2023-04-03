@@ -1,11 +1,23 @@
-import {combineReducers, configureStore, createStore} from '@reduxjs/toolkit';
+import {
+  combineReducers,
+  configureStore,
+  getDefaultMiddleware,
+} from '@reduxjs/toolkit';
 import {useDispatch, useSelector} from 'react-redux';
 import {todoListReducer} from './modules/todo-lists/redux/reducer';
 import {notificationReducer} from './modules/notifications/redux/reducer';
 import {appInfoReducer} from './modules/app-info/redux/reducer';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {persistReducer, persistStore} from 'redux-persist';
-import thunk from 'redux-thunk';
+import {
+  FLUSH,
+  PAUSE,
+  PERSIST,
+  PURGE,
+  REGISTER,
+  REHYDRATE,
+  persistReducer,
+  persistStore,
+} from 'redux-persist';
 
 const persistConfig = {
   key: 'root',
@@ -23,7 +35,11 @@ const persistedReducer = persistReducer(persistConfig, appReducer);
 
 export const store = configureStore({
   reducer: persistedReducer,
-  middleware: [thunk],
+  middleware: getDefaultMiddleware({
+    serializableCheck: {
+      ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+    },
+  }),
 });
 export const persistor = persistStore(store);
 
