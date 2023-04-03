@@ -5,7 +5,7 @@ import {getTodoMiniEntity} from '../redux/selectors';
 import {Checkbox, Text} from 'react-native-paper';
 import {StyleSheet, View} from 'react-native';
 import {handleApiRequest} from '../../../utils/api';
-import {updateTodo} from '../redux/operations';
+import {deleteTodo, updateTodo} from '../redux/operations';
 import {TodoUpdateRequest} from '../../../typings/model';
 import FlatTextInput from '../../../components/FlatTextInput';
 import {useIsOnline} from '../../../utils/app-info';
@@ -35,6 +35,10 @@ const TodoListTodosScrollItems = (props: Props): JSX.Element => {
   };
 
   const onBlur = (text: string) => {
+    if (text === '') {
+      handleApiRequest(dispatch, dispatch(deleteTodo(todoListId, todo.id)));
+      return;
+    }
     if (todo && text !== todo.description) {
       handleApiRequest(
         dispatch,

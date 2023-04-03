@@ -122,6 +122,15 @@ const todoListSlice = createSlice({
         action.payload.id,
       );
     },
+    deleteFromTodoListCollectionSet: (
+      state,
+      action: PayloadAction<{todoListId: number; id: number}>,
+    ) => {
+      const collection =
+        state.collectionSetTodoListTodos.byId[action.payload.todoListId];
+      const indexToRemove = collection.ids.indexOf(action.payload.id);
+      collection.ids.splice(indexToRemove, 1);
+    },
   },
 });
 

@@ -182,7 +182,15 @@ export const deleteTodo = (
     return executeOperationEntity(
       () => getState().todoList.todos,
       () => todoApi.remove(todoListId, id),
-      response => dispatch(todoListAction.resetTodo({id: response.id})),
+      response => {
+        dispatch(todoListAction.resetTodo({id: response.id}));
+        dispatch(
+          todoListAction.deleteFromTodoListCollectionSet({
+            todoListId,
+            id: response.id,
+          }),
+        );
+      },
     );
   };
 };
