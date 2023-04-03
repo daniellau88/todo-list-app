@@ -8,7 +8,7 @@ Todo list app is a mobile application for you to create your own todo list. You 
 
 ### Demo Video
 
-[![Demo Video](https://img.youtube.com/vi/0mWNT5PBHW0/maxresdefault.jpg)](https://youtu.be/0mWNT5PBHW0)
+[![Demo Video](https://img.youtube.com/vi/0mWNT5PBHW0/0.jpg)](https://youtu.be/0mWNT5PBHW0)
 
 ### Screenshots
 
