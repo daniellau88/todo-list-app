@@ -1,20 +1,24 @@
 import React from 'react';
 import {storeTodo} from '../redux/operations';
 import {useAppDispatch} from '../../../store';
-import {Button, Card} from 'react-native-paper';
+import {Button, Card, Text} from 'react-native-paper';
 import {handleApiRequest} from '../../../utils/api';
 import FlatTextInput from '../../../components/FlatTextInput';
 import TodoListTodosScrollItems from './TodoListTodosScrollItems';
 import {StyleSheet, View} from 'react-native';
 import {useIsOnline} from '../../../utils/app-info';
+import {EntityCollection} from '../../../typings/store';
 
 interface Props {
-  todoListTodoIds: Array<number>;
+  todoListTodoCollection: EntityCollection;
   todoListId: number;
 }
 
 const TodoListTodosScrollViewTodos = (props: Props): JSX.Element => {
-  const {todoListTodoIds, todoListId} = props;
+  const {todoListTodoCollection, todoListId} = props;
+
+  const todoListTodoIds = todoListTodoCollection.ids;
+  const todoListLastRetrieved = todoListTodoCollection.last_update;
 
   const dispatch = useAppDispatch();
   const isOnline = useIsOnline();
@@ -36,6 +40,11 @@ const TodoListTodosScrollViewTodos = (props: Props): JSX.Element => {
   return (
     <Card>
       <Card.Content>
+        {todoListLastRetrieved === 0 && (
+          <Text variant="bodyLarge" style={styles.offlineText}>
+            No offline todos available
+          </Text>
+        )}
         {todoListTodoIds.map(x => (
           <TodoListTodosScrollItems key={x} todoListId={todoListId} id={x} />
         ))}
@@ -65,6 +74,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     margin: 5,
+  },
+  offlineText: {
+    textAlign: 'center',
+    justifyContent: 'center',
   },
   descriptionText: {
     flex: 1,

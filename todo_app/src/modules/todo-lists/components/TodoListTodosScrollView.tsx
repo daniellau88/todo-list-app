@@ -34,9 +34,9 @@ const TodoListTodosScrollView = (props: Props): JSX.Element => {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
   const todoList = useAppSelector(getTodoListEntity(todoListId));
-  const todoListTodoIds = useAppSelector(
+  const todoListTodoCollection = useAppSelector(
     getTodoListTodoCollection(todoListId),
-  ).ids;
+  );
   const lastRetrievedDate = todoList?.last_full_update;
 
   React.useEffect(() => {
@@ -73,7 +73,7 @@ const TodoListTodosScrollView = (props: Props): JSX.Element => {
         }>
         <TodoListTodosScrollViewTodoDetails todoList={todoList} />
         <TodoListTodosScrollViewTodos
-          todoListTodoIds={todoListTodoIds}
+          todoListTodoCollection={todoListTodoCollection}
           todoListId={todoListId}
         />
       </ScrollView>

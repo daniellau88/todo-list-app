@@ -15,6 +15,7 @@ import TodoListScrollItems from './TodoListScrollItems';
 import {handleApiRequests} from '../../../utils/api';
 import {useIsFocused} from '@react-navigation/native';
 import OfflineTopBar from '../../app-info/components/OfflineTopBar';
+import {Text} from 'react-native-paper';
 
 const TodoListScrollView = (): JSX.Element => {
   const isFocused = useIsFocused();
@@ -47,6 +48,11 @@ const TodoListScrollView = (): JSX.Element => {
   return (
     <View style={styles.container}>
       <OfflineTopBar lastRetrievedDate={lastRetrievedDate} />
+      {lastRetrievedDate === 0 && (
+        <Text variant="bodyLarge" style={styles.offlineText}>
+          No offline todo lists available
+        </Text>
+      )}
       <FlatList
         data={todoIds}
         renderItem={id => <TodoListScrollItems id={id.item} />}
@@ -60,7 +66,13 @@ const TodoListScrollView = (): JSX.Element => {
 };
 
 const styles = StyleSheet.create({
-  container: {flex: 1},
+  container: {
+    flex: 1,
+  },
+  offlineText: {
+    textAlign: 'center',
+    justifyContent: 'center',
+  },
 });
 
 export default TodoListScrollView;
