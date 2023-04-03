@@ -1,6 +1,7 @@
 export interface TodoListResponse {
   id: number;
   name: string;
+  todos_count: number;
   created_at: string;
   updated_at: string;
 }
@@ -17,6 +18,7 @@ export interface TodoResponse {
 export interface TodoListEntity {
   id: number;
   name: string;
+  todos_count: number;
   created_at: number;
   updated_at: number;
 }

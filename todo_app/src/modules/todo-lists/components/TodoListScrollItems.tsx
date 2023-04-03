@@ -33,7 +33,7 @@ const TodoListScrollItems = (props: Props): JSX.Element => {
     <Card onPress={handleOnPress}>
       <Card.Content>
         <Title>{todoList.name}</Title>
-        <Paragraph>TODO: Summary</Paragraph>
+        <Paragraph>{todoList.todos_count} Todo(s)</Paragraph>
         <View>
           <Text style={styles.dateText}>{lastUpdatedInfo}</Text>
         </View>
